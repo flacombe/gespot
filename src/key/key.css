@@ -46,7 +46,7 @@
 }
 
 
-.oim-plant-sprite {
+.oim-key-sprite {
   margin-left: auto;
   margin-right: auto;
   vertical-align: middle;
@@ -54,7 +54,6 @@
 
 .oim-key-header {
   width: 100%;
-  height: 20px;
   padding-bottom: 5px;
   padding-top: 2px;
   padding-left: 8px;

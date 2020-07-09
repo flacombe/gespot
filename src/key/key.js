@@ -1,18 +1,8 @@
 import {el, text, mount, list, setStyle} from 'redom';
-import {
-  default as power_layers,
-  voltage_scale,
-  special_voltages,
-  plant_types,
-} from '../style/style_oim_power.js';
-import comms_layers from '../style/style_oim_telecoms.js';
-import water_layers from '../style/style_oim_water.js';
-import {
-  default as petroleum_layers,
-  colour_oil,
-  colour_gas,
-} from '../style/style_oim_petroleum.js';
-import {svgLine, svgLineFromLayer, svgRectFromLayer} from './svg.js';
+import {scale_color, text_paint, operator_text, construction_p, underground_p, poleRadius_p, materialColor_scale, lineOpacity_p} from '../style/style_gsp_common.js';
+import {powerLayers, voltage_scale, special_voltages, warningAreas_filters, powerColor} from '../style/style_gsp_power.js';
+import {telecomLayers, telecomColor, mediumColor_scale} from '../style/style_gsp_telecoms.js';
+import {svgLine, svgCircle, svgLineFromLayer, svgRectFromLayer} from './svg.js';
 import './key.css';
 
 class Td {
@@ -76,53 +66,40 @@ class KeyControl {
       this._container.style.display = 'none';
       this._control.style.display = 'block';
     };
-    return el('.oim-key-header', el('h2', 'Key'), close_button);
+    return el('.oim-key-header', el('h2', 'Légende'), close_button);
   }
 
   populate() {
     mount(this._container, this.header());
 
     let pane = el('.oim-key-pane');
-    pane.appendChild(el('h3', 'Power Lines'));
-    mount(pane, this.voltageTable());
-    pane.appendChild(el('h3', 'Power Plants'));
-    mount(pane, this.plantTable());
-    pane.appendChild(el('h3', 'Power Generators'));
-    mount(pane, this.generatorTable());
-    pane.appendChild(el('h3', 'Other Power'));
-    mount(pane, this.towerTable());
-    pane.appendChild(el('h3', 'Telecoms'));
+    pane.appendChild(el('h4', 'Supports'));
+    mount(pane, this.supportsTable());
+    pane.appendChild(el('h4', 'Energie'));
+    mount(pane, this.powerTable());
+    pane.appendChild(el('h4', 'Télécoms'));
     mount(pane, this.telecomTable());
-    pane.appendChild(el('h3', 'Petroleum'));
-    mount(pane, this.petroleumTable());
-    pane.appendChild(el('h3', 'Water'));
-    mount(pane, this.waterTable());
     this._pane = pane;
 
     mount(this._container, pane);
   }
 
-  voltageTable() {
+  supportsTable() {
     let rows = [];
-    for (let row of voltage_scale) {
+    for (let row of materialColor_scale) {
       let label = row[0];
       if (label === null) {
-        label = '< 10 kV';
+        label = 'Commun';
       } else {
-        label = `≥ ${label} kV`;
+        label = `${label}`;
       }
 
       rows.push([label, row[1]]);
     }
 
-    for (const [key, value] of Object.entries(special_voltages)) {
-      rows.push([key, value]);
-    }
-
-    rows = rows.map(row => [row[0], svgLine(row[1], 4)]);
-
-    rows.push(['Underground', svgLine('#7A7A85', 2, '3 2')]);
-    rows.push(['Line Reference', this.sprite('power_line_ref')]);
+    rows = rows.map(row => [row[0], svgCircle(row[1], 8, 'grey', 0)]);
+    rows.push(['Pylône', this.sprite('power_tower')]);
+    rows.push(['Transition aéro-sout', this.sprite('power_pole_transition')]);
 
     let table = list('table', Tr);
     table.update(rows);
@@ -130,7 +107,7 @@ class KeyControl {
   }
 
   sprite(name, size = 25) {
-    let spriteDiv = el('img.oim-plant-sprite', {
+    let spriteDiv = el('img.oim-key-sprite', {
       src: `/style/sprites/${name}.svg`,
       height: size,
     });
@@ -140,73 +117,33 @@ class KeyControl {
     return spriteDiv;
   }
 
-  plantTable() {
-    let rows = [];
-    for (const [key, value] of Object.entries(plant_types)) {
-      rows.push([
-        key.charAt(0).toUpperCase() + key.slice(1),
-        this.sprite(value),
-      ]);
-    }
-    let table = list('table', Tr);
-    table.update(rows);
-    return table;
-  }
-
-  generatorTable() {
+  powerTable() {
     let rows = [
-      ['Wind Turbine', this.sprite('power_wind')],
-      ['Solar Panel', svgRectFromLayer(power_layers, 'power_solar_panel')],
+      ['Appui élec', svgCircle("#dedede", 8, powerColor, 3)],
     ];
-    let table = list('table', Tr);
-    table.update(rows);
-    return table;
-  }
-
-  towerTable() {
-    let rows = [
-      ['Tower/Pylon', this.sprite('power_tower')],
-      ['Transition Tower', this.sprite('power_tower_transition')],
-      ['Pole', this.sprite('power_pole', 8)],
-      ['Transition Pole', this.sprite('power_pole_transition')],
-      ['Transformer', this.sprite('power_transformer')],
-      ['Switch', this.sprite('power_switch')],
-      ['Compensator', this.sprite('power_compensator')],
-    ];
+    
     let table = list('table', Tr);
     table.update(rows);
     return table;
   }
 
   telecomTable() {
-    let rows = [
-      ['Cable', svgLineFromLayer(comms_layers, 'telecoms_line')],
-      ['Tower/Mast', this.sprite('comms_tower')],
-      ['Datacenter/Exchange', svgRectFromLayer(comms_layers, 'telecoms_data_center')],
-    ];
-    let table = list('table', Tr);
-    table.update(rows);
-    return table;
-  }
+    let rows = [];
+    for (let row of mediumColor_scale) {
+      let label = row[0];
+      if (label === null) {
+        label = 'Artère inconnue';
+      } else {
+        label = `Artère ${label}`;
+      }
 
-  petroleumTable() {
-    let rows = [
-      ['Oil Pipeline', svgLine(colour_oil, 2)],
-      ['Gas Pipeline', svgLine(colour_gas, 2)],
-      [
-        'Petroleum Facility',
-        svgRectFromLayer(petroleum_layers, 'petroleum_site'),
-      ],
-    ];
-    let table = list('table', Tr);
-    table.update(rows);
-    return table;
-  }
+      rows.push([label, row[1]]);
+    }
 
-  waterTable() {
-    let rows = [
-      ['Water Pipeline', svgLineFromLayer(water_layers, 'water_pipeline')],
-    ];
+    rows = rows.map(row => [row[0], svgLine(row[1], 2, '6 3')]);
+    rows.push(['Appui télécom', svgCircle("#dedede", 8, telecomColor, 3)]);
+    rows.push(['Pylône radio', this.sprite('comms_tower')]);
+
     let table = list('table', Tr);
     table.update(rows);
     return table;

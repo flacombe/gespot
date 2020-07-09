@@ -2,14 +2,15 @@ import {el, text} from 'redom';
 import invert from 'lodash.invert';
 import isEqual from 'lodash.isequal';
 import './layerswitcher.css';
+import 'bootstrap4-toggle';
+import 'bootstrap4-toggle/css/bootstrap4-toggle.min.css';
 
 class LayerSwitcher {
   constructor(layers, default_visible = []) {
     this._layers = layers;
     this._identifiers = this._initLayerIdentifiers();
     this._default_visible = default_visible;
-    this._container = el('div', {class: 'mapboxgl-ctrl layer-switcher-list'});
-    this._container.appendChild(el('h3', 'Layers'));
+    this._container = el('div.d-inline.text-nowrap');
     this._visible = [...default_visible];
   }
 
@@ -113,29 +114,21 @@ class LayerSwitcher {
     }
     this._createList();
 
-    const wrapper = el('div', {
-      class: 'mapboxgl-ctrl mapboxgl-ctrl-group layer-switcher',
-    });
-    wrapper.appendChild(this._container);
-    wrapper.onmouseover = e => {
-      this._container.style.display = 'block';
-    };
-    wrapper.onmouseout = e => {
-      this._container.style.display = 'none';
-    };
-    return wrapper;
+    return this._container;
   }
 
   _createList() {
-    var list = el('ul');
     var i = 0;
     for (let name in this._layers) {
       let checkbox = el('input', {
         type: 'checkbox',
         id: 'layer' + i,
         checked: this._visible.includes(name),
+        "data-size":"xs",
+        "data-toggle":"toggle",
+        "data-onstyle":"dark"
       });
-      let label = el('label', name, {for: 'layer' + i});
+      let label = el('label', name, {for: 'layer' + i, "class":"pr-2"});
 
       checkbox.onchange = e => {
         if (e.target.checked) {
@@ -146,11 +139,9 @@ class LayerSwitcher {
         this._updateVisibility();
       };
 
-      let li = el('li', [label, checkbox]);
-      list.appendChild(li);
+      this._container.appendChild(el('div', {"class":"mx-2 d-inline"}, [label, checkbox]));
       i++;
     }
-    this._container.appendChild(list);
   }
 }
 

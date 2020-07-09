@@ -1,6 +1,6 @@
 {
   "version": 8,
-  "name": "OpenInfraMap",
+  "name": "Gespot",
   "metadata": {
     "mapbox:autocomposite": false,
     "mapbox:type": "template",
@@ -24,15 +24,15 @@
   "sources": {
     "openmaptiles": {
       "type": "vector",
-      "url": "https://api.maptiler.com/tiles/v3/tiles.json?key=4HQAZUSrAg563kYxgVEy"
+      "url": "https://api.maptiler.com/tiles/v3/tiles.json?key=2raHq2ahXwNHsKorHH5t"
     },
-    "openinframap": {
+    "gespot": {
       "type": "vector",
-      "url": "https://openinframap.org/map.json"
+      "url": "https://gespot.fr/map.json"
     }
   },
-  "sprite": "https://openinframap.org/style/sprite",
-  "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=4HQAZUSrAg563kYxgVEy",
+  "sprite": "https://gespot.fr/style/sprite",
+  "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=2raHq2ahXwNHsKorHH5t",
   "layers": [],
-  "id": "openinframap"
+  "id": "gespot"
 }

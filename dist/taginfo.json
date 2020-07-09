@@ -1,12 +1,12 @@
 {
   "data_format": 1,
-  "data_url": "https://openinframap.org/taginfo.json",
+  "data_url": "https://gespot.fr/taginfo.json",
   "project": {
-    "name": "Open Infrastructure Map",
-    "description": "Map of infrastructure in OSM",
-    "project_url": "https://openinframap.org",
-    "contact_name": "Russ Garrett",
-    "contact_email": "russ@garrett.co.uk"
+    "name": "Gespot",
+    "description": "Map of overhead telco and power infrastructure",
+    "project_url": "gespot.fr",
+    "contact_name": "François Lacombe",
+    "contact_email": "francois.lacombe@infos-reseaux.com"
   },
   "tags": [
     {

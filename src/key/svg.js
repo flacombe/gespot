@@ -57,6 +57,26 @@ export function svgRect(colour, stroke = 'black', opacity = 1) {
   return svg('svg', rect, {height: height, width: width});
 }
 
+export function svgCircle(colour, radius = 10, stroke = 'black', strokeWidth = 1) {
+  let circle = svg('circle', {
+    r: radius,
+    cx: radius+2,
+    cy: radius+2
+  });
+
+  setStyle(circle, {
+    fill: colour,
+    stroke: stroke,
+    'stroke-width': strokeWidth,
+    opacity: 1,
+  });
+
+  return svg('svg', circle, {
+    width: radius*2 + 5,
+    height: radius*2 + 5
+  });
+}
+
 export function svgRectFromLayer(layers, name) {
   let layer = getLayer(layers, name);
   let dasharray = '';
