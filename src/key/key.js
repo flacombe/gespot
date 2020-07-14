@@ -6,12 +6,6 @@ import {
   plant_types,
 } from '../style/style_oim_power.js';
 import comms_layers from '../style/style_oim_telecoms.js';
-import water_layers from '../style/style_oim_water.js';
-import {
-  default as petroleum_layers,
-  colour_oil,
-  colour_gas,
-} from '../style/style_oim_petroleum.js';
 import {svgLine, svgLineFromLayer, svgRectFromLayer} from './svg.js';
 import './key.css';
 
@@ -85,18 +79,10 @@ class KeyControl {
     let pane = el('.oim-key-pane');
     pane.appendChild(el('h3', 'Power Lines'));
     mount(pane, this.voltageTable());
-    pane.appendChild(el('h3', 'Power Plants'));
-    mount(pane, this.plantTable());
-    pane.appendChild(el('h3', 'Power Generators'));
-    mount(pane, this.generatorTable());
     pane.appendChild(el('h3', 'Other Power'));
     mount(pane, this.towerTable());
     pane.appendChild(el('h3', 'Telecoms'));
     mount(pane, this.telecomTable());
-    pane.appendChild(el('h3', 'Petroleum'));
-    mount(pane, this.petroleumTable());
-    pane.appendChild(el('h3', 'Water'));
-    mount(pane, this.waterTable());
     this._pane = pane;
 
     mount(this._container, pane);
@@ -140,29 +126,6 @@ class KeyControl {
     return spriteDiv;
   }
 
-  plantTable() {
-    let rows = [];
-    for (const [key, value] of Object.entries(plant_types)) {
-      rows.push([
-        key.charAt(0).toUpperCase() + key.slice(1),
-        this.sprite(value),
-      ]);
-    }
-    let table = list('table', Tr);
-    table.update(rows);
-    return table;
-  }
-
-  generatorTable() {
-    let rows = [
-      ['Wind Turbine', this.sprite('power_wind')],
-      ['Solar Panel', svgRectFromLayer(power_layers, 'power_solar_panel')],
-    ];
-    let table = list('table', Tr);
-    table.update(rows);
-    return table;
-  }
-
   towerTable() {
     let rows = [
       ['Tower/Pylon', this.sprite('power_tower')],
@@ -183,29 +146,6 @@ class KeyControl {
       ['Cable', svgLineFromLayer(comms_layers, 'telecoms_line')],
       ['Tower/Mast', this.sprite('comms_tower')],
       ['Datacenter/Exchange', svgRectFromLayer(comms_layers, 'telecoms_data_center')],
-    ];
-    let table = list('table', Tr);
-    table.update(rows);
-    return table;
-  }
-
-  petroleumTable() {
-    let rows = [
-      ['Oil Pipeline', svgLine(colour_oil, 2)],
-      ['Gas Pipeline', svgLine(colour_gas, 2)],
-      [
-        'Petroleum Facility',
-        svgRectFromLayer(petroleum_layers, 'petroleum_site'),
-      ],
-    ];
-    let table = list('table', Tr);
-    table.update(rows);
-    return table;
-  }
-
-  waterTable() {
-    let rows = [
-      ['Water Pipeline', svgLineFromLayer(water_layers, 'water_pipeline')],
     ];
     let table = list('table', Tr);
     table.update(rows);
