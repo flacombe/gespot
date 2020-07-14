@@ -26,7 +26,7 @@
       "type": "vector",
       "url": "https://api.maptiler.com/tiles/v3/tiles.json?key=4HQAZUSrAg563kYxgVEy"
     },
-    "gespot": {
+    "openinframap": {
       "type": "vector",
       "url": "http://www.gespot.fr/map.json"
     }
@@ -34,5 +34,5 @@
   "sprite": "http://gespot.fr/style/sprite",
   "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=4HQAZUSrAg563kYxgVEy",
   "layers": [],
-  "id": "openinframap"
+  "id": "gespot"
 }

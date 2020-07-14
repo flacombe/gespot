@@ -14,10 +14,7 @@ import map_style from './style/style.json';
 import style_base from './style/style_base.js';
 import style_labels from './style/style_labels.js';
 import style_oim_power from './style/style_oim_power.js';
-import style_oim_power_heatmap from './style/style_oim_power_heatmap.js';
 import style_oim_telecoms from './style/style_oim_telecoms.js';
-import style_oim_petroleum from './style/style_oim_petroleum.js';
-import style_oim_water from './style/style_oim_water.js';
 
 function init() {
   if (!mapboxgl.supported({failIfMajorPerformanceCaveat: true})) {
@@ -37,10 +34,7 @@ function init() {
   );
 
   var oim_layers = style_oim_power.concat(
-    style_oim_power_heatmap,
-    style_oim_petroleum,
-    style_oim_telecoms,
-    style_oim_water,
+    style_oim_telecoms
   );
 
   oim_layers.sort((a, b) => {
@@ -51,10 +45,7 @@ function init() {
 
   const layers = {
     Power: 'power_',
-    'Solar Generation': 'heatmap_',
     Telecoms: 'telecoms_',
-    'Oil & Gas': 'petroleum_',
-    Water: 'water_',
     Labels: 'place_',
   };
   const layers_enabled = ['Power', 'Telecoms', 'Labels'];
