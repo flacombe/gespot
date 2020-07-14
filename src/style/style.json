@@ -26,12 +26,12 @@
       "type": "vector",
       "url": "https://api.maptiler.com/tiles/v3/tiles.json?key=4HQAZUSrAg563kYxgVEy"
     },
-    "openinframap": {
+    "gespot": {
       "type": "vector",
-      "url": "https://openinframap.org/map.json"
+      "url": "http://www.gespot.fr/map.json"
     }
   },
-  "sprite": "https://openinframap.org/style/sprite",
+  "sprite": "http://gespot.fr/style/sprite",
   "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=4HQAZUSrAg563kYxgVEy",
   "layers": [],
   "id": "openinframap"
