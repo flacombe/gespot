@@ -24,7 +24,7 @@
   "sources": {
     "openmaptiles": {
       "type": "vector",
-      "url": "https://api.maptiler.com/tiles/v3/tiles.json?key=4HQAZUSrAg563kYxgVEy"
+      "url": "https://api.maptiler.com/tiles/v3/tiles.json?key=2raHq2ahXwNHsKorHH5t"
     },
     "openinframap": {
       "type": "vector",
@@ -32,7 +32,7 @@
     }
   },
   "sprite": "http://gespot.fr/style/sprite",
-  "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=4HQAZUSrAg563kYxgVEy",
+  "glyphs": "https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=2raHq2ahXwNHsKorHH5t",
   "layers": [],
   "id": "gespot"
 }

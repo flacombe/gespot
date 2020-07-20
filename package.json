@@ -1,5 +1,5 @@
 {
-  "name": "openinframap-web",
+  "name": "gespot",
   "version": "1.0.0",
   "description": "",
   "main": "webpack.common.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openinframap/web.git"
+    "url": "git+https://github.com/flacombe/gespot.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/openinframap/web/issues"
+    "url": "https://github.com/flacombe/gespot/issues"
   },
-  "homepage": "https://github.com/openinframap/web#readme",
+  "homepage": "https://github.com/flacombe/gespot#readme",
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
