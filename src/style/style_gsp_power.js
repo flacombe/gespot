@@ -188,9 +188,9 @@ const substation_label_visible_p = [
     [
       'all',
       ['>', ['coalesce', ['get', 'voltage'], 0], 50],
-      ['>', ['zoom'], 12],
+      ['>', ['zoom'], 16],
     ],
-    ['>', ['zoom'], 13],
+    ['>', ['zoom'], 16],
   ],
   ['!=', ['get', 'substation'], 'transition'],
 ];
@@ -350,7 +350,7 @@ const layers = [
     'source-layer': 'power_substation',
     minzoom: 13,
     paint: {
-      'fill-opacity': 0.3,
+      'fill-opacity': lineOpacity_p,
       'fill-color': voltage_color('voltage'),
       'fill-outline-color': 'rgba(0, 0, 0, 1)',
     },

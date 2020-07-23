@@ -128,12 +128,7 @@ class KeyControl {
   towerTable() {
     let rows = [
       ['Tower/Pylon', this.sprite('power_tower')],
-      ['Transition Tower', this.sprite('power_tower_transition')],
-      ['Pole', this.sprite('power_pole', 8)],
-      ['Transition Pole', this.sprite('power_pole_transition')],
-      ['Transformer', this.sprite('power_transformer')],
-      ['Switch', this.sprite('power_switch')],
-      ['Compensator', this.sprite('power_compensator')],
+      ['Pole', this.sprite('power_pole', 8)]
     ];
     let table = list('table', Tr);
     table.update(rows);
@@ -143,8 +138,8 @@ class KeyControl {
   telecomTable() {
     let rows = [
       ['Cable', svgLineFromLayer(comms_layers, 'telecoms_line')],
+      ['Pole', svgRectFromLayer(comms_layers, 'telecoms_pole')],
       ['Tower/Mast', this.sprite('comms_tower')],
-      ['Datacenter/Exchange', svgRectFromLayer(comms_layers, 'telecoms_data_center')],
     ];
     let table = list('table', Tr);
     table.update(rows);

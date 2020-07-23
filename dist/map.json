@@ -6,15 +6,15 @@
   "center": [0, 0, 0],
   "format": "pbf",
   "minzoom": 2,
-  "maxzoom": 17,
+  "maxzoom": 18,
   "tiles": ["http://gespot.fr/tiles/{z}/{x}/{y}.pbf"],
   "vector_layers": [
     {"id": "power_line", "description": "Power lines and cables", "fields": {}},
     {"id": "power_tower", "description": "Power towers and poles", "fields": {}},
     {"id": "power_substation", "description": "Power substation facilities", "fields": {}},
-    {"id": "power_substation_points", "description": "Power substation facilities points", "fields": {}},
+    {"id": "power_substation_point", "description": "Power substation facilities points", "fields": {}},
     {"id": "telecoms_communication_line", "description": "Telecom lines", "fields": {}},
     {"id": "telecoms_mast", "description": "Telecom radio masts", "fields": {}},
-    {"id": "utility_supports", "description": "Overhead utilities supports", "fields": {}}
+    {"id": "utility_support", "description": "Overhead utilities supports", "fields": {}}
   ]
 }
