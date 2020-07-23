@@ -1,5 +1,4 @@
 import {text_paint, underground_p, construction_p, lineOpacity_p} from './style_gsp_common.js';
-// OpenInfraMap layers
 
 const voltage_scale = [
   [null, '#7A7A85'],
@@ -47,8 +46,6 @@ function voltage_color(field) {
     'case',
     hvdc_p,
     special_voltages['HVDC'], // HVDC (frequency == 0)
-    traction_freq_p,
-    special_voltages['Traction (<50 Hz)'], // Traction power
     voltage_func,
   ];
 }
@@ -257,8 +254,6 @@ const freq = [
   'case',
   hvdc_p,
   ' DC',
-  traction_freq_p,
-  ['concat', ' ', ['get', 'frequency'], ' Hz'],
   '',
 ];
 
@@ -351,7 +346,7 @@ const layers = [
     id: 'power_substation',
     type: 'fill',
     filter: substation_visible_p,
-    source: 'openinframap',
+    source: 'gespot',
     'source-layer': 'power_substation',
     minzoom: 13,
     paint: {
@@ -364,7 +359,7 @@ const layers = [
     zorder: 260,
     id: 'power_line_1',
     type: 'line',
-    source: 'openinframap',
+    source: 'gespot',
     'source-layer': 'power_line',
     filter: ['all', ['!', underground_p], power_visible_p],
     minzoom: 0,
@@ -383,7 +378,7 @@ const layers = [
     zorder: 260,
     id: 'power_line_2',
     type: 'line',
-    source: 'openinframap',
+    source: 'gespot',
     'source-layer': 'power_line',
     filter: [
       'all',
@@ -407,7 +402,7 @@ const layers = [
     zorder: 260,
     id: 'power_line_3',
     type: 'line',
-    source: 'openinframap',
+    source: 'gespot',
     'source-layer': 'power_line',
     filter: [
       'all',
@@ -432,7 +427,7 @@ const layers = [
     id: 'power_tower',
     type: 'symbol',
     filter: ['==', ['get', 'type'], 'tower'],
-    source: 'openinframap',
+    source: 'gespot',
     'source-layer': 'power_tower',
     minzoom: 13,
     paint: text_paint,
@@ -462,7 +457,7 @@ const layers = [
     id: 'power_pole',
     type: 'symbol',
     filter: ['==', ['get', 'type'], 'pole'],
-    source: 'openinframap',
+    source: 'gespot',
     'source-layer': 'power_tower',
     minzoom: 14,
     paint: text_paint,
@@ -492,7 +487,7 @@ const layers = [
     id: 'power_substation_point',
     type: 'circle',
     filter: ['all', substation_visible_p, substation_point_visible_p],
-    source: 'openinframap',
+    source: 'gespot',
     'source-layer': 'power_substation_point',
     minzoom: 5,
     layout: {},
@@ -513,8 +508,8 @@ const layers = [
         15,
         1,
       ],
-      'circle-opacity': construction_opacity,
-      'circle-stroke-opacity': construction_opacity,
+      'circle-opacity': lineOpacity_p,
+      'circle-stroke-opacity': lineOpacity_p,
     },
   },
   {
@@ -527,7 +522,7 @@ const layers = [
       ['!=', ['coalesce', ['get', 'ref'], ''], ''],
       ['<', ['length', ['get', 'ref']], 5],
     ],
-    source: 'openinframap',
+    source: 'gespot',
     'source-layer': 'power_line',
     minzoom: 7,
     layout: {
@@ -543,7 +538,7 @@ const layers = [
     id: 'power_line_label',
     type: 'symbol',
     filter: ['all', power_visible_p],
-    source: 'openinframap',
+    source: 'gespot',
     'source-layer': 'power_line',
     minzoom: 11,
     paint: text_paint,
@@ -567,7 +562,7 @@ const layers = [
     zorder: 562,
     id: 'power_substation_ref_label',
     type: 'symbol',
-    source: 'openinframap',
+    source: 'gespot',
     'source-layer': 'power_substation_point',
     minzoom: 14.5,
     layout: {
@@ -584,7 +579,7 @@ const layers = [
     zorder: 562,
     id: 'power_substation_label',
     type: 'symbol',
-    source: 'openinframap',
+    source: 'gespot',
     filter: substation_label_visible_p,
     'source-layer': 'power_substation_point',
     minzoom: 8,

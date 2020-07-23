@@ -10,7 +10,7 @@ const layers = [
     zorder: 40,
     id: 'telecoms_line',
     type: 'line',
-    source: 'openinframap',
+    source: 'gespot',
     minzoom: 3,
     'source-layer': 'telecoms_communication_line',
     paint: {
@@ -26,7 +26,7 @@ const layers = [
     zorder: 141,
     id: 'telecoms_pole',
     type: 'symbol',
-    source: 'openinframap',
+    source: 'gespot',
     filter: [
       'all',
       utilityTelecom_p
@@ -59,7 +59,7 @@ const layers = [
     zorder: 141,
     id: 'telecoms_mast',
     type: 'symbol',
-    source: 'openinframap',
+    source: 'gespot',
     minzoom: 10,
     'source-layer': 'telecoms_mast',
     paint: text_paint,
@@ -91,7 +91,7 @@ const layers = [
   {
     id: 'telecoms_line_label',
     type: 'symbol',
-    source: 'openinframap',
+    source: 'gespot',
     minzoom: 9,
     'source-layer': 'telecoms_communication_line',
     paint: text_paint,
