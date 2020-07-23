@@ -518,6 +518,7 @@ const layers = [
     type: 'symbol',
     filter: [
       'all',
+      ['!', underground_p],
       power_ref_visible_p,
       ['!=', ['coalesce', ['get', 'ref'], ''], ''],
       ['<', ['length', ['get', 'ref']], 5],
@@ -537,7 +538,7 @@ const layers = [
     zorder: 561,
     id: 'power_line_label',
     type: 'symbol',
-    filter: ['all', power_visible_p],
+    filter: ['all', ['!', underground_p], power_visible_p],
     source: 'gespot',
     'source-layer': 'power_line',
     minzoom: 11,

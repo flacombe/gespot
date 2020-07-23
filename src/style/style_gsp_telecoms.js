@@ -11,6 +11,7 @@ const layers = [
     id: 'telecoms_line',
     type: 'line',
     source: 'gespot',
+    filter: ['all', ['!', underground_p]],
     minzoom: 3,
     'source-layer': 'telecoms_communication_line',
     paint: {
@@ -92,6 +93,7 @@ const layers = [
     id: 'telecoms_line_label',
     type: 'symbol',
     source: 'gespot',
+    filter: ['all', ['!', underground_p]],
     minzoom: 9,
     'source-layer': 'telecoms_communication_line',
     paint: text_paint,
