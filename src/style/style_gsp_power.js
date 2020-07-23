@@ -429,7 +429,7 @@ const layers = [
     filter: ['==', ['get', 'type'], 'tower'],
     source: 'gespot',
     'source-layer': 'power_tower',
-    minzoom: 13,
+    minzoom: 11,
     paint: text_paint,
     layout: {
       'icon-image': [
@@ -459,7 +459,7 @@ const layers = [
     filter: ['==', ['get', 'type'], 'pole'],
     source: 'gespot',
     'source-layer': 'power_tower',
-    minzoom: 14,
+    minzoom: 12,
     paint: text_paint,
     layout: {
       'icon-image': [

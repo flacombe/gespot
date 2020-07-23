@@ -32,7 +32,7 @@ const layers = [
       'all',
       utilityTelecom_p
     ],
-    minzoom: 10,
+    minzoom: 12,
     'source-layer': 'utility_support',
     paint: text_paint,
     layout: {
