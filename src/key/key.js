@@ -2,10 +2,9 @@ import {el, text, mount, list, setStyle} from 'redom';
 import {
   default as power_layers,
   voltage_scale,
-  special_voltages,
-  plant_types,
-} from '../style/style_oim_power.js';
-import comms_layers from '../style/style_oim_telecoms.js';
+  special_voltages
+} from '../style/style_gsp_power.js';
+import comms_layers from '../style/style_gsp_telecoms.js';
 import {svgLine, svgLineFromLayer, svgRectFromLayer} from './svg.js';
 import './key.css';
 

@@ -13,8 +13,8 @@ import LayerSwitcher from './layerswitcher/layerswitcher.js';
 import map_style from './style/style.json';
 import style_base from './style/style_base.js';
 import style_labels from './style/style_labels.js';
-import style_oim_power from './style/style_oim_power.js';
-import style_oim_telecoms from './style/style_oim_telecoms.js';
+import style_gsp_power from './style/style_gsp_power.js';
+import style_gsp_telecoms from './style/style_gsp_telecoms.js';
 
 function init() {
   if (!mapboxgl.supported({failIfMajorPerformanceCaveat: true})) {
@@ -33,11 +33,11 @@ function init() {
     true, // Lazy load the plugin
   );
 
-  var oim_layers = style_oim_power.concat(
-    style_oim_telecoms
+  var gsp_layers = style_gsp_power.concat(
+    style_gsp_telecoms
   );
 
-  oim_layers.sort((a, b) => {
+  gsp_layers.sort((a, b) => {
     if (a['zorder'] < b['zorder']) return -1;
     if (a['zorder'] > b['zorder']) return 1;
     return 0;
@@ -53,7 +53,7 @@ function init() {
   var url_hash = new URLHash(layer_switcher);
   layer_switcher.urlhash = url_hash;
 
-  map_style.layers = style_base.concat(oim_layers, style_labels);
+  map_style.layers = style_base.concat(gsp_layers, style_labels);
 
   layer_switcher.setInitialVisibility(map_style);
 
@@ -84,7 +84,7 @@ function init() {
   map.addControl(new KeyControl(), 'top-right');
   map.addControl(layer_switcher, 'top-right');
   map.addControl(new EditButton(), 'bottom-right');
-  new InfoPopup(oim_layers.map(layer => layer['id']), 9).add(map);
+  new InfoPopup(gsp_layers.map(layer => layer['id']), 9).add(map);
 }
 
 if (document.readyState != 'loading') {

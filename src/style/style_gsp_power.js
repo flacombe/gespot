@@ -618,4 +618,4 @@ const layers = [
   }
 ];
 
-export {layers as default, voltage_scale, special_voltages, plant_types};
+export {layers as default, voltage_scale, special_voltages};
