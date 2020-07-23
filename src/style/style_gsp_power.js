@@ -1,4 +1,4 @@
-import {text_paint, underground_p} from './style_oim_common.js';
+import {text_paint, underground_p, construction_p, lineOpacity_p} from './style_gsp_common.js';
 // OpenInfraMap layers
 
 const voltage_scale = [
@@ -17,29 +17,13 @@ const special_voltages = {
   'Traction (<50 Hz)': '#A8B596',
 };
 
-const plant_types = {
-  coal: 'power_plant_coal',
-  geothermal: 'power_plant_geothermal',
-  hydro: 'power_plant_hydro',
-  nuclear: 'power_plant_nuclear',
-  oil: 'power_plant_oilgas',
-  gas: 'power_plant_oilgas',
-  solar: 'power_plant_solar',
-  wind: 'power_plant_wind',
-  biomass: 'power_plant_biomass',
-  waste: 'power_plant_waste',
-  battery: 'power_plant_battery',
-};
-
-// === Frequency predicates
-const traction_freq_p = [
+// Power utility predicates
+const utilityTelecom_p = [
   'all',
-  ['has', 'frequency'],
-  ['!=', ['get', 'frequency'], ''],
-  ['!=', ['to-number', ['get', 'frequency']], 50],
-  ['!=', ['to-number', ['get', 'frequency']], 60],
+  ['==', ['get', 'utility'], 'power'],
 ];
 
+// === Frequency predicates
 const hvdc_p = [
   'all',
   ['has', 'frequency'],
@@ -262,38 +246,6 @@ const power_ref_visible_p = [
   ],
 ];
 
-const plant_label_visible_p = [
-  'any',
-  ['>', ['coalesce', ['get', 'output'], 0], 1000],
-  ['all', ['>', ['coalesce', ['get', 'output'], 0], 750], ['>', ['zoom'], 5]],
-  ['all', ['>', ['coalesce', ['get', 'output'], 0], 250], ['>', ['zoom'], 6]],
-  ['all', ['>', ['coalesce', ['get', 'output'], 0], 100], ['>', ['zoom'], 7]],
-  ['all', ['>', ['coalesce', ['get', 'output'], 0], 10], ['>', ['zoom'], 9]],
-  ['>', ['zoom'], 10],
-];
-
-const plant_label = [
-  'case',
-  ['all', ['!', ['has', 'name']], ['has', 'output']],
-  ['concat', ['get', 'output'], ' MW'],
-  ['has', 'output'],
-  ['concat', ['get', 'name'], ' \n', ['get', 'output'], ' MW'],
-  ['get', 'name'],
-];
-
-function plant_image() {
-  let expr = ['match', ['get', 'source']];
-  for (const [key, value] of Object.entries(plant_types)) {
-    expr.push(key, value);
-  }
-  expr.push('power_plant'); // default
-  return expr;
-}
-
-const construction_p = ['get', 'construction'];
-
-const construction_opacity = ['case', construction_p, 0.3, 1];
-
 const construction_label = [
   'case',
   construction_p,
@@ -395,96 +347,6 @@ const substation_label = [
 
 const layers = [
   {
-    zorder: 60,
-    id: 'power_line_case',
-    type: 'line',
-    source: 'openinframap',
-    'source-layer': 'power_line',
-    filter: ['==', ['get', 'tunnel'], true],
-    minzoom: 12,
-    paint: {
-      'line-opacity': ['case', construction_p, 0.2, 0.4],
-      'line-color': '#7C4544',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 12, 4, 18, 10],
-    },
-    layout: {
-      'line-join': 'round',
-      'line-cap': 'round',
-    },
-  },
-  {
-    zorder: 61,
-    id: 'power_line_underground_1',
-    type: 'line',
-    filter: ['all', underground_p, power_visible_p],
-    source: 'openinframap',
-    'source-layer': 'power_line',
-    minzoom: 0,
-    paint: {
-      'line-color': voltage_color('voltage'),
-      'line-width': voltage_line_thickness,
-      'line-dasharray': [3, 2],
-      'line-offset': voltage_offset(1),
-      'line-opacity': construction_opacity,
-    },
-    layout: {
-      'line-join': 'round',
-      'line-cap': 'round',
-    },
-  },
-  {
-    zorder: 61,
-    id: 'power_line_underground_2',
-    type: 'line',
-    filter: ['all', underground_p, power_visible_p, ['has', 'voltage_2']],
-    source: 'openinframap',
-    'source-layer': 'power_line',
-    minzoom: multi_voltage_min_zoom,
-    paint: {
-      'line-color': voltage_color('voltage_2'),
-      'line-width': voltage_line_thickness,
-      'line-dasharray': [3, 2],
-      'line-offset': voltage_offset(2),
-      'line-opacity': construction_opacity,
-    },
-    layout: {
-      'line-join': 'round',
-      'line-cap': 'round',
-    },
-  },
-  {
-    zorder: 61,
-    id: 'power_line_underground_3',
-    type: 'line',
-    filter: ['all', underground_p, power_visible_p, ['has', 'voltage_3']],
-    source: 'openinframap',
-    'source-layer': 'power_line',
-    minzoom: multi_voltage_min_zoom,
-    paint: {
-      'line-color': voltage_color('voltage_3'),
-      'line-width': voltage_line_thickness,
-      'line-dasharray': [3, 2],
-      'line-offset': voltage_offset(3),
-      'line-opacity': construction_opacity,
-    },
-    layout: {
-      'line-join': 'round',
-      'line-cap': 'round',
-    },
-  },
-  {
-    zorder: 160,
-    id: 'power_plant',
-    type: 'fill',
-    source: 'openinframap',
-    minzoom: 11,
-    'source-layer': 'power_plant',
-    paint: {
-      'fill-opacity': 0.3,
-      'fill-outline-color': 'rgba(0, 0, 0, 1)',
-    },
-  },
-  {
     zorder: 161,
     id: 'power_substation',
     type: 'fill',
@@ -499,19 +361,6 @@ const layers = [
     },
   },
   {
-    zorder: 162,
-    id: 'power_solar_panel',
-    type: 'fill',
-    source: 'openinframap',
-    'source-layer': 'power_generator_area',
-    filter: ['==', ['get', 'source'], 'solar'],
-    minzoom: 13,
-    paint: {
-      'fill-color': '#726BA9',
-      'fill-outline-color': 'rgba(50, 50, 50, 1)',
-    },
-  },
-  {
     zorder: 260,
     id: 'power_line_1',
     type: 'line',
@@ -523,7 +372,7 @@ const layers = [
       'line-color': voltage_color('voltage'),
       'line-width': voltage_line_thickness,
       'line-offset': voltage_offset(1),
-      'line-opacity': construction_opacity,
+      'line-opacity': lineOpacity_p,
     },
     layout: {
       'line-join': 'round',
@@ -547,7 +396,7 @@ const layers = [
       'line-color': voltage_color('voltage_2'),
       'line-width': voltage_line_thickness,
       'line-offset': voltage_offset(2),
-      'line-opacity': construction_opacity,
+      'line-opacity': lineOpacity_p,
     },
     layout: {
       'line-join': 'round',
@@ -571,47 +420,11 @@ const layers = [
       'line-color': voltage_color('voltage_3'),
       'line-width': voltage_line_thickness,
       'line-offset': voltage_offset(3),
-      'line-opacity': construction_opacity,
+      'line-opacity': lineOpacity_p,
     },
     layout: {
       'line-join': 'round',
       'line-cap': 'round',
-    },
-  },
-  {
-    zorder: 261,
-    id: 'power_transformer',
-    type: 'symbol',
-    source: 'openinframap',
-    'source-layer': 'power_transformer',
-    minzoom: 14,
-    paint: text_paint,
-    layout: {
-      'icon-image': 'power_transformer',
-    },
-  },
-  {
-    zorder: 262,
-    id: 'power_compensator',
-    type: 'symbol',
-    source: 'openinframap',
-    'source-layer': 'power_compensator',
-    minzoom: 14,
-    paint: text_paint,
-    layout: {
-      'icon-image': 'power_compensator',
-    },
-  },
-  {
-    zorder: 263,
-    id: 'power_switch',
-    type: 'symbol',
-    source: 'openinframap',
-    'source-layer': 'power_switch',
-    minzoom: 14,
-    paint: text_paint,
-    layout: {
-      'icon-image': 'power_switch',
     },
   },
   {
@@ -672,43 +485,6 @@ const layers = [
       ],
       'text-offset': [0, 1],
       'text-max-angle': 10,
-    },
-  },
-  {
-    zorder: 266,
-    id: 'power_wind_turbine',
-    type: 'symbol',
-    source: 'openinframap',
-    'source-layer': 'power_generator',
-    filter: ['==', ['get', 'source'], 'wind'],
-    minzoom: 11,
-    paint: text_paint,
-    layout: {
-      'icon-image': 'power_wind',
-      'icon-anchor': 'bottom',
-      'icon-size': ['interpolate', ['linear'], ['zoom'], 11, 0.5, 14, 1],
-      'text-field': '{name}',
-      'text-size': ['step', ['zoom'], 0, 12, 9],
-      'text-offset': [0, 1],
-      'text-anchor': 'top',
-    },
-  },
-  {
-    zorder: 267,
-    id: 'power_wind_turbine_point',
-    type: 'circle',
-    source: 'openinframap',
-    'source-layer': 'power_generator',
-    //['all',
-    filter: ['==', ['get', 'source'], 'wind'],
-    //      ['has', 'output'],
-    //      ['>', ['get', 'output'], 1]
-    //    ],
-    minzoom: 9,
-    maxzoom: 11,
-    paint: {
-      'circle-radius': 1.5,
-      'circle-color': '#444444',
     },
   },
   {
@@ -839,50 +615,7 @@ const layers = [
       'text-max-width': 8,
     },
     paint: text_paint,
-  },
-  {
-    zorder: 563,
-    id: 'power_plant_label',
-    type: 'symbol',
-    source: 'openinframap',
-    filter: plant_label_visible_p,
-    'source-layer': 'power_plant_point',
-    minzoom: 6,
-    maxzoom: 24,
-    layout: {
-      'symbol-sort-key': ['-', 10000, ['get', 'output']],
-      'symbol-z-order': 'source',
-      'icon-allow-overlap': true,
-      'icon-image': plant_image(),
-      'icon-size': ['interpolate', ['linear'], ['zoom'], 6, 0.6, 10, 0.8],
-      'text-field': plant_label,
-      'text-anchor': 'top',
-      'text-offset': [0, 1],
-      'text-size': [
-        'interpolate',
-        ['linear'],
-        ['zoom'],
-        7,
-        10,
-        18,
-        [
-          'interpolate',
-          ['linear'],
-          ['coalesce', ['get', 'output'], 0],
-          0,
-          10,
-          2000,
-          16,
-        ],
-      ],
-      'text-optional': true,
-    },
-    paint: Object.assign({}, text_paint, {
-      // Control visibility using the opacity property...
-      'icon-opacity': ['step', ['zoom'], 1, 11, 0],
-      'text-opacity': ['step', ['zoom'], 0, 7, 1],
-    }),
-  },
+  }
 ];
 
 export {layers as default, voltage_scale, special_voltages, plant_types};

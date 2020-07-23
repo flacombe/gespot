@@ -12,6 +12,8 @@ const operator_text = ["step", ["zoom"],
         ]
       ];
 
+const construction_p = ['get', 'construction'];
+
 const underground_p = ["any",
   ['==', ['get', 'location'], 'underground'],
   ['==', ['get', 'location'], 'underwater'],
@@ -22,4 +24,10 @@ const underground_p = ["any",
   ]
 ];
 
-export {text_paint, operator_text, underground_p};
+// Function to assign opacity to lines according to zoom
+const lineOpacity_p = ["case",
+  construction_p, 0.3,
+  ['interpolate', ['linear'], ['zoom'], 9, 1, 10, 0.6, 14, 0.2]
+]
+
+export {text_paint, operator_text, construction_p, underground_p, lineOpacity_p};

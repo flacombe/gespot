@@ -1,4 +1,9 @@
-import {text_paint, operator_text} from './style_oim_common.js';
+import {text_paint, operator_text, underground_p, construction_p, lineOpacity_p} from './style_gsp_common.js';
+
+const utilityTelecom_p = [
+  'all',
+  ['==', ['get', 'utility'], 'telecom'],
+];
 
 const layers = [
   {
@@ -18,16 +23,36 @@ const layers = [
     },
   },
   {
-    zorder: 140,
-    id: 'telecoms_data_center',
-    type: 'fill',
+    zorder: 141,
+    id: 'telecoms_pole',
+    type: 'symbol',
     source: 'openinframap',
+    filter: [
+      'all',
+      utilityTelecom_p
+    ],
     minzoom: 10,
-    'source-layer': 'telecoms_data_center',
-    paint: {
-      'fill-opacity': 0.3,
-      'fill-color': '#7D59AB',
-      'fill-outline-color': 'rgba(0, 0, 0, 1)',
+    'source-layer': 'utility_support',
+    paint: text_paint,
+    layout: {
+      'icon-image': [
+        'case',
+        ['get', 'transition'],
+        'power_pole_transition',
+        'power_pole',
+      ],
+      'icon-size': 0.5,
+      'text-field': '{ref}',
+      'text-size': [
+        'step',
+        // Set visibility by using size
+        ['zoom'],
+        0,
+        14,
+        10,
+      ],
+      'text-offset': [0, 1],
+      'text-max-angle': 10,
     },
   },
   {
@@ -61,26 +86,6 @@ const layers = [
         ]
       },
       'text-optional': true
-    },
-  },
-  {
-    id: 'telecoms_data_center_symbol',
-    type: 'symbol',
-    source: 'openinframap',
-    minzoom: 11,
-    'source-layer': 'telecoms_data_center',
-    paint: text_paint,
-    layout: {
-      'text-field': operator_text,
-      'text-size': {
-        "stops": [
-          [11, 0],
-          [13, 0],
-          [13.01, 10]
-        ],
-      },
-      'text-offset': [0, 1],
-      'text-anchor': 'top',
     },
   },
   {
