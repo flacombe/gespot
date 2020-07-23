@@ -25,9 +25,6 @@ const underground_p = ["any",
 ];
 
 // Function to assign opacity to lines according to zoom
-const lineOpacity_p = ["case",
-  construction_p, 0.3,
-  ['interpolate', ['linear'], ['zoom'], 9, 1, 10, 0.6, 14, 0.2]
-]
+const lineOpacity_p = ['interpolate', ['linear'], ['zoom'], 9, 1, 10, 0.6, 14, 0.2]
 
 export {text_paint, operator_text, construction_p, underground_p, lineOpacity_p};
