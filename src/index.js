@@ -66,8 +66,9 @@ function init() {
     style: map_style,
     hash: false,
     minZoom: 2,
-    maxZoom: 17.9,
-    center: [12, 26],
+    maxZoom: 18.9,
+    center: [3.114, 47.17],
+    zoom:5.5
   }, url_hash.getPosition()));
 
   url_hash.onAdd(map);
