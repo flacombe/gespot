@@ -32,7 +32,7 @@ header {
   position: absolute;
   display: block;
   font-size: 13px;
-  width:0;
+  width:auto;
   height:45px;
 }
 
@@ -84,4 +84,8 @@ a {
   font-size: 10px;
   line-height: 14px;
   border-radius: 4px 0px 0px 0px;
+}
+
+.mapboxgl-ctrl-top-right {
+  top: 60px !important
 }
