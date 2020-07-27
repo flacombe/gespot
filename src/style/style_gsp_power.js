@@ -428,7 +428,7 @@ const layers = [
     },
   },
   {
-    zorder: 264,
+    zorder: 300,
     id: 'power_tower',
     type: 'symbol',
     filter: ['==', ['get', 'type'], 'tower'],
@@ -458,7 +458,7 @@ const layers = [
     },
   },
   {
-    zorder: 140,
+    zorder: 305,
     id: 'power_pole_symbol',
     type: 'symbol',
     source: 'gespot',
@@ -493,7 +493,7 @@ const layers = [
     },
   },
   {
-    zorder: 141,
+    zorder: 306,
     id: 'power_pole_point',
     type: 'circle',
     source: 'gespot',

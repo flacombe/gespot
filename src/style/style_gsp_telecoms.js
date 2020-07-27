@@ -52,7 +52,7 @@ const layers = [
     },
   },
   {
-    zorder: 140,
+    zorder: 305,
     id: 'telecoms_pole_symbol',
     type: 'symbol',
     source: 'gespot',
@@ -86,7 +86,7 @@ const layers = [
     },
   },
   {
-    zorder: 141,
+    zorder: 306,
     id: 'telecoms_pole_point',
     type: 'circle',
     source: 'gespot',
@@ -105,6 +105,31 @@ const layers = [
           8, 0.5,
           15, 1
       ]
+    },
+  },
+  {
+    zorder:520,
+    id: 'telecoms_pole_label',
+    type: 'symbol',
+    source: 'gespot',
+    filter: [
+      'all',
+      utilityTelecom_p
+    ],
+    minzoom: 14.5,
+    'source-layer': 'utility_support',
+    paint: text_paint,
+    layout: {
+      'text-field': '{ref}',
+      'text-size': {
+        "stops": [
+          [11, 0],
+          [12, 0],
+          [12.01, 10]
+        ],
+      },
+      'text-offset': [0, 1],
+      'text-anchor': 'top',
     },
   },
   {
