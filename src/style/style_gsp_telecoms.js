@@ -1,4 +1,4 @@
-import {text_paint, operator_text, construction_p, underground_p, poleRadius_p, materialColor_scale, lineOpacity_p} from './style_gsp_common.js';
+import {scale_color, text_paint, operator_text, construction_p, underground_p, poleRadius_p, materialColor_scale, lineOpacity_p} from './style_gsp_common.js';
 
 const utilityTelecom_p = [
   'all',
@@ -12,21 +12,6 @@ const medium_scale = [
   ['coaxial', '#136fff'],
   [null,'#7A7A85']
 ]
-
-function medium_color() {
-  let medium_fct = ['match', ["get", "telecom:medium"]];
-  
-  for (let row of medium_scale) {
-    if (row[0] == null){
-      medium_fct.push(row[1]);
-      continue;
-    }
-    medium_fct.push(row[0]);
-    medium_fct.push(row[1]);
-  }
-
-  return medium_fct;
-}
 
 // Function to assign power line thickness.
 // Interpolate first by zoom level and then by voltage.
@@ -60,7 +45,7 @@ const layers = [
     minzoom: 10,
     'source-layer': 'telecoms_communication_line',
     paint: {
-      'line-color': medium_color(),
+      'line-color': scale_color("telecom:medium", medium_scale),
       'line-width': lineThickness_p,
       'line-opacity': lineOpacity_p,
       'line-dasharray': [7, 2, 3],
@@ -79,7 +64,7 @@ const layers = [
     'source-layer': 'utility_support',
     paint: {
       'circle-radius': poleRadius_p,
-      'circle-color': materialColor_scale,
+      'circle-color': scale_color("material", materialColor_scale),
       'circle-stroke-width': ['interpolate', ['linear'], ['zoom'],
           5, 0,
           6, 0.1,

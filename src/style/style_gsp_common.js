@@ -15,6 +15,21 @@ const operator_text = ["step", ["zoom"],
 const construction_p = ['get', 'construction'];
 
 // Colors
+function scale_color(tag, scale) {
+  let result = ['match', ["get", tag]];
+  
+  for (let row of scale) {
+    if (row[0] == null){
+      result.push(row[1]);
+      continue;
+    }
+    result.push(row[0]);
+    result.push(row[1]);
+  }
+
+  return result;
+}
+
 const materialColor_scale = [
   ['wood', '#61637A'],
   ['metal', '#ff8900'],
@@ -42,4 +57,4 @@ const underground_p = ["any",
 // Function to assign opacity to lines according to zoom
 const lineOpacity_p = ['interpolate', ['linear'], ['zoom'], 9, 1, 10, 0.6, 14, 0.2]
 
-export {text_paint, operator_text, construction_p, underground_p, poleRadius_p, materialColor_scale, lineOpacity_p};
+export {scale_color, text_paint, operator_text, construction_p, underground_p, poleRadius_p, materialColor_scale, lineOpacity_p};

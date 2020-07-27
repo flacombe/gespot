@@ -1,4 +1,4 @@
-import {text_paint, operator_text, construction_p, underground_p, poleRadius_p, material_scale, lineOpacity_p} from './style_gsp_common.js';
+import {scale_color, text_paint, operator_text, construction_p, underground_p, poleRadius_p, material_scale, lineOpacity_p} from './style_gsp_common.js';
 
 const voltage_scale = [
   [null, '#7A7A85'],
