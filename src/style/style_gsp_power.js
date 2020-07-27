@@ -1,5 +1,10 @@
 import {scale_color, text_paint, operator_text, construction_p, underground_p, poleRadius_p, material_scale, lineOpacity_p} from './style_gsp_common.js';
 
+const utilityPower_p = [
+  'all',
+  ['==', ['get', 'utility'], 'power'],
+];
+
 const voltage_scale = [
   [null, '#7A7A85'],
   [10, '#6E97B8'],
