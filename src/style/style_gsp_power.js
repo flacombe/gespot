@@ -1,10 +1,5 @@
 import {scale_color, text_paint, operator_text, construction_p, underground_p, poleRadius_p, materialColor_scale, lineOpacity_p} from './style_gsp_common.js';
 
-const utilityPower_p = [
-  'all',
-  ['==', ['get', 'utility'], 'power'],
-];
-
 const voltage_scale = [
   [null, '#7A7A85'],
   [10, '#6E97B8'],
@@ -22,7 +17,7 @@ const special_voltages = {
 };
 
 // Power utility predicates
-const utilityTelecom_p = [
+const utilityPower_p = [
   'all',
   ['==', ['get', 'utility'], 'power'],
 ];
@@ -109,9 +104,9 @@ const voltage_line_thickness = [
       ['linear'],
       ['coalesce', ['get', 'voltage'], 0],
       0,
-      1,
+      1.5,
       100,
-      1.8,
+      2,
       800,
       4,
     ],
@@ -513,6 +508,32 @@ const layers = [
           8, 0.5,
           15, 1
       ]
+    },
+  },
+  {
+    zorder:520,
+    id: 'power_pole_label',
+    type: 'symbol',
+    source: 'gespot',
+    filter: [
+      'all',
+      utilityPower_p,
+      ['==', ['get', 'type'], 'pole']
+    ],
+    minzoom: 14.5,
+    'source-layer': 'power_tower',
+    paint: text_paint,
+    layout: {
+      'text-field': '{ref}',
+      'text-size': {
+        "stops": [
+          [11, 0],
+          [12, 0],
+          [12.01, 10]
+        ],
+      },
+      'text-offset': [0, 1],
+      'text-anchor': 'top',
     },
   },
   {
