@@ -13,6 +13,21 @@ const medium_scale = [
   [null,'#7A7A85']
 ]
 
+function medium_color() {
+  let medium_fct = ['match', ["get", "telecom:medium"]];
+  
+  for (let row of medium_scale) {
+    if (row[0] == null){
+      medium_fct.push(row[1]);
+      continue;
+    }
+    medium_fct.push(row[0]);
+    medium_fct.push(row[1]);
+  }
+
+  return medium_fct;
+}
+
 // Function to assign power line thickness.
 // Interpolate first by zoom level and then by voltage.
 const lineThickness_p = [
@@ -45,7 +60,7 @@ const layers = [
     minzoom: 10,
     'source-layer': 'telecoms_communication_line',
     paint: {
-      'line-color': medium_scale,
+      'line-color': medium_color(),
       'line-width': lineThickness_p,
       'line-opacity': lineOpacity_p,
       'line-dasharray': [7, 2, 3],
@@ -54,7 +69,7 @@ const layers = [
   {
     zorder: 141,
     id: 'telecoms_pole',
-    type: 'symbol',
+    type: 'circle',
     source: 'gespot',
     filter: [
       'all',
