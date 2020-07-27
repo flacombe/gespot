@@ -31,11 +31,11 @@ function scale_color(tag, scale) {
 }
 
 const materialColor_scale = [
-  ['wood', '#61637A'],
-  ['metal', '#ff8900'],
-  ['concrete', '#136fff'],
-  ['composite', '#136fff'],
-  [null,'#7A7A85']
+  ['wood', '#7d5121'],
+  ['metal', '#808080'],
+  ['concrete', '#333333'],
+  ['composite', '#77b3fe'],
+  [null,'#020202']
 ];
 
 const poleRadius_p = ["step", ["zoom"],

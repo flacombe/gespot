@@ -52,15 +52,47 @@ const layers = [
     },
   },
   {
-    zorder: 141,
-    id: 'telecoms_pole',
-    type: 'circle',
+    zorder: 140,
+    id: 'telecoms_pole_point',
+    type: 'symbol',
     source: 'gespot',
     filter: [
       'all',
       utilityTelecom_p
     ],
     minzoom: 12,
+    'source-layer': 'utility_support',
+    layout: {
+      'icon-image': [
+        'case',
+        ['get', 'transition'],
+        'power_pole_transition',
+        'power_pole',
+      ],
+      'icon-size': 0.5,
+      'text-field': '{ref}',
+      'text-size': [
+        'step',
+        // Set visibility by using size
+        ['zoom'],
+        0,
+        14,
+        10,
+      ],
+      'text-offset': [0, 1],
+      'text-max-angle': 10,
+    },
+  },
+  {
+    zorder: 141,
+    id: 'telecoms_pole_symbol',
+    type: 'circle',
+    source: 'gespot',
+    filter: [
+      'all',
+      utilityTelecom_p
+    ],
+    minzoom: 15,
     'source-layer': 'utility_support',
     paint: {
       'circle-radius': poleRadius_p,
@@ -71,6 +103,19 @@ const layers = [
           8, 0.5,
           15, 1
       ]
+    },
+    layout: {
+      'text-field': '{ref}',
+      'text-size': [
+        'step',
+        // Set visibility by using size
+        ['zoom'],
+        0,
+        14,
+        10,
+      ],
+      'text-offset': [0, 1],
+      'text-max-angle': 10,
     },
   },
   {
