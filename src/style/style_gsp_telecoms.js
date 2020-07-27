@@ -61,6 +61,7 @@ const layers = [
       utilityTelecom_p
     ],
     minzoom: 12,
+    maxzoom:14.5,
     'source-layer': 'utility_support',
     paint: text_paint,
     layout: {
@@ -93,7 +94,7 @@ const layers = [
       'all',
       utilityTelecom_p
     ],
-    minzoom: 15,
+    minzoom: 14.5,
     'source-layer': 'utility_support',
     paint: {
       'circle-radius': poleRadius_p,

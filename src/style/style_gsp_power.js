@@ -453,13 +453,17 @@ const layers = [
     },
   },
   {
-    zorder: 265,
-    id: 'power_pole',
+    zorder: 140,
+    id: 'power_pole_symbol',
     type: 'symbol',
-    filter: ['==', ['get', 'type'], 'pole'],
     source: 'gespot',
-    'source-layer': 'power_tower',
+    filter: [
+      'all',
+      utilityPower_p
+    ],
     minzoom: 12,
+    maxzoom:14.5,
+    'source-layer': 'utility_support',
     paint: text_paint,
     layout: {
       'icon-image': [
@@ -480,6 +484,28 @@ const layers = [
       ],
       'text-offset': [0, 1],
       'text-max-angle': 10,
+    },
+  },
+  {
+    zorder: 141,
+    id: 'power_pole_point',
+    type: 'circle',
+    source: 'gespot',
+    filter: [
+      'all',
+      utilityPower_p
+    ],
+    minzoom: 14.5,
+    'source-layer': 'utility_support',
+    paint: {
+      'circle-radius': poleRadius_p,
+      'circle-color': scale_color("material", materialColor_scale),
+      'circle-stroke-width': ['interpolate', ['linear'], ['zoom'],
+          5, 0,
+          6, 0.1,
+          8, 0.5,
+          15, 1
+      ]
     },
   },
   {
