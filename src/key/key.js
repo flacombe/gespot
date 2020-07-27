@@ -138,7 +138,7 @@ class KeyControl {
   telecomTable() {
     let rows = [
       ['Cable', svgLineFromLayer(comms_layers, 'telecoms_line')],
-      ['Pole', svgRectFromLayer(comms_layers, 'telecoms_pole')],
+      ['Pole', svgRectFromLayer(comms_layers, 'telecoms_pole_symbol')],
       ['Tower/Mast', this.sprite('comms_tower')],
     ];
     let table = list('table', Tr);
