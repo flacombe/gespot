@@ -464,11 +464,12 @@ const layers = [
     source: 'gespot',
     filter: [
       'all',
-      utilityPower_p
+      utilityPower_p,
+      ['==', ['get', 'type'], 'pole']
     ],
     minzoom: 12,
     maxzoom:14.5,
-    'source-layer': 'utility_support',
+    'source-layer': 'power_tower',
     paint: text_paint,
     layout: {
       'icon-image': [
@@ -498,10 +499,11 @@ const layers = [
     source: 'gespot',
     filter: [
       'all',
-      utilityPower_p
+      utilityPower_p,
+      ['==', ['get', 'type'], 'pole']
     ],
     minzoom: 14.5,
-    'source-layer': 'utility_support',
+    'source-layer': 'power_tower',
     paint: {
       'circle-radius': poleRadius_p,
       'circle-color': scale_color("material", materialColor_scale),
