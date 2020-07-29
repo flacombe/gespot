@@ -359,10 +359,10 @@ const layers = [
     ],
     minzoom: 15,
     'source-layer': 'power_line_areas',
-    paint: text_paint,
-    layout: {
+    paint: {
       'fill-color': '#DD0000',
-      'fill-opacity': 0.5
+      'fill-opacity': 0.5,
+      'fill-outline-color': 'rgba(0, 0, 0, 1)'
     },
   },
   {
