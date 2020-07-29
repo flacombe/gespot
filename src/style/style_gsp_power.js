@@ -357,7 +357,7 @@ const layers = [
       exclusionArea_p,
       ['==', ['get', 'type'], 'pole']
     ],
-    minzoom: 15,
+    minzoom: 14,
     'source-layer': 'power_line_areas',
     paint: {
       'fill-color': '#DD0000',

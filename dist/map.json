@@ -10,6 +10,7 @@
   "tiles": ["http://gespot.fr/tiles/{z}/{x}/{y}.pbf"],
   "vector_layers": [
     {"id": "power_line", "description": "Power lines and cables", "fields": {}},
+    {"id": "power_line_areas", "description": "Power lines exclusion areas", "fields": {}},
     {"id": "power_tower", "description": "Power towers and poles", "fields": {}},
     {"id": "power_substation", "description": "Power substation facilities", "fields": {}},
     {"id": "power_substation_point", "description": "Power substation facilities points", "fields": {}},
