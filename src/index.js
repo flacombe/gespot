@@ -68,7 +68,7 @@ function init() {
     minZoom: 2,
     maxZoom: 18.9,
     center: [2.727, 46.125],
-    zoom:5.3
+    zoom:4.9
   }, url_hash.getPosition()));
 
   url_hash.onAdd(map);

@@ -22,6 +22,12 @@ const utilityPower_p = [
   ['==', ['get', 'utility'], 'power'],
 ];
 
+// Power areas management
+const exclusionArea_p = [
+  'all',
+  ['==', ['get', 'area_level'], 'Z3'],
+];
+
 // === Frequency predicates
 const hvdc_p = [
   'all',
@@ -341,6 +347,24 @@ const substation_label = [
 ];
 
 const layers = [
+  {
+    zorder: 50,
+    id: 'power_line_area',
+    type: 'fill',
+    source: 'gespot',
+    filter: [
+      'all',
+      exclusionArea_p,
+      ['==', ['get', 'type'], 'pole']
+    ],
+    minzoom: 15,
+    'source-layer': 'power_line_areas',
+    paint: text_paint,
+    layout: {
+      'fill-color': '#DD0000',
+      'fill-opacity': 0.5
+    },
+  },
   {
     zorder: 161,
     id: 'power_substation',
