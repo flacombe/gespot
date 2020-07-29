@@ -23,7 +23,7 @@ const utilityPower_p = [
 ];
 
 // Power areas management
-const exclusionArea_p = [
+const warningArea_p = [
   'all',
   ['==', ['get', 'area_level'], 'Z3'],
 ];
@@ -354,14 +354,14 @@ const layers = [
     source: 'gespot',
     filter: [
       'all',
-      exclusionArea_p,
-      ['==', ['get', 'type'], 'pole']
+      warningArea_p,
+      ['!', underground_p]
     ],
     minzoom: 14,
-    'source-layer': 'power_line_areas',
+    'source-layer': 'power_line_warningareas',
     paint: {
       'fill-color': '#DD0000',
-      'fill-opacity': 0.5,
+      'fill-opacity': 0.3,
       'fill-outline-color': 'rgba(0, 0, 0, 1)'
     },
   },
