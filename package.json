@@ -38,11 +38,16 @@
     "in-browser-language": "^1.0.3"
   },
   "dependencies": {
-    "mapbox-gl": "^1.10.1",
-    "redom": "^3.24.2",
-    "title-case": "^2.1.1",
+    "bootstrap": "^4.5.0",
+    "bootstrap-slider": "^11.0.2",
+    "bootstrap4-toggle": "^3.6.1",
+    "jquery": "^3.5.1",
     "lodash.invert": "^4.3.0",
     "lodash.isequal": "^4.5.0",
-    "lodash.sortby": "^4.7.0"
+    "lodash.sortby": "^4.7.0",
+    "mapbox-gl": "^1.10.1",
+    "popper.js": "^1.16.1",
+    "redom": "^3.24.2",
+    "title-case": "^2.1.1"
   }
 }

@@ -23,10 +23,28 @@ const utilityPower_p = [
 ];
 
 // Power areas management
-const warningArea_p = [
-  'all',
-  ['==', ['get', 'area_level'], 'Z3'],
-];
+const warningAreas_filters = {
+  "DMA":[
+    'all',
+    ['==', ['get', 'area_level'], 'DMA'],
+    ['!', underground_p]
+  ],
+  "DLVR":[
+    'all',
+    ['==', ['get', 'area_level'], 'DLVR'],
+    ['!', underground_p]
+  ],
+  "DLVS":[
+    'all',
+    ['==', ['get', 'area_level'], 'DLVS'],
+    ['!', underground_p]
+  ],
+  "DLI":[
+    'all',
+    ['==', ['get', 'area_level'], 'DLI'],
+    ['!', underground_p]
+  ]
+}
 
 // === Frequency predicates
 const hvdc_p = [
@@ -349,21 +367,29 @@ const substation_label = [
 const layers = [
   {
     zorder: 50,
-    id: 'power_line_area',
+    id: 'power_line_warning',
     type: 'fill',
     source: 'gespot',
-    filter: [
-      'all',
-      warningArea_p,
-      ['!', underground_p]
-    ],
+    filter: warningAreas_filters["DMA"],
     minzoom: 14,
     'source-layer': 'power_line_warningareas',
     paint: {
-      'fill-color': '#DD0000',
-      'fill-opacity': 0.3,
+      'fill-color': [
+        'case',
+        warningAreas_filters["DMA"],
+        "#DD0000",
+        warningAreas_filters["DLVR"],
+        "#ffc107",
+        warningAreas_filters["DLVS"],
+        "#ffc107",
+        "#17a2b8"
+      ],
+      'fill-opacity': 0.25,
       'fill-outline-color': 'rgba(0, 0, 0, 1)'
     },
+    layout:{
+      "visibility":"none"
+    }
   },
   {
     zorder: 161,
@@ -692,4 +718,4 @@ const layers = [
   }
 ];
 
-export {layers as default, voltage_scale, special_voltages};
+export {layers as default, voltage_scale, special_voltages, warningAreas_filters};

@@ -3,6 +3,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SpritezeroWebpackPlugin = require('spritezero-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/index.js',
@@ -29,5 +30,9 @@ module.exports = {
     new CopyPlugin([
       {from: 'sprites', to: 'style/sprites'}
     ]),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+    })
   ],
 };

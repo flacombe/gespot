@@ -33,7 +33,6 @@ header {
   display: block;
   font-size: 13px;
   width:auto;
-  height:45px;
 }
 
 header, .mapboxgl-ctrl.mapboxgl-ctrl-attrib {
@@ -43,7 +42,7 @@ header, .mapboxgl-ctrl.mapboxgl-ctrl-attrib {
 h1 {
   display: inline;
   margin: 0px;
-  font-size: 23px;
+  font-size: 23px !important;
 }
 
 a {
@@ -88,4 +87,8 @@ a {
 
 .mapboxgl-ctrl-top-right {
   top: 60px !important
+}
+
+.slider-selection {
+	background: #81bfde !important;
 }
