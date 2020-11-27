@@ -1,5 +1,7 @@
 import './index.css';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import mapboxgl from 'mapbox-gl';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,6 +10,7 @@ import 'bootstrap-slider';
 import 'bootstrap-slider/dist/css/bootstrap-slider.min.css';
 
 import {mount,el} from 'redom';
+import "regenerator-runtime/runtime";
 
 import EditButton from './editbutton.js';
 import URLHash from './urlhash.js';
@@ -15,6 +18,7 @@ import InfoBox from './infobox.js';
 import InfoPopup from './infopopup.js';
 import KeyControl from './key/key.js';
 import LayerSwitcher from './layerswitcher/layerswitcher.js';
+import AddokGeocoder from './geocoder/addok.js';
 
 import map_style from './style/style.json';
 import style_base from './style/style_base.js';
@@ -77,14 +81,30 @@ function init() {
     zoom:4.9
   }, url_hash.getPosition()));
 
+  function geocode(query){
+    var geocoder = new AddokGeocoder("https://demo.addok.xyz");
+    return geocoder.geocode(query);
+  }
+
   url_hash.onAdd(map);
+  map.addControl(
+    new MapboxGeocoder({
+      accessToken: "no_token",
+      localGeocoder: geocode,
+      localGeocoderOnly: true,
+      zoom: 14,
+      placeholder: 'Recherche',
+      mapboxgl: mapboxgl,
+      collapsed: true
+    })
+  );
   map.addControl(new mapboxgl.NavigationControl(), 'top-right');
   map.addControl(
     new mapboxgl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true,
       },
-      trackUserLocation: true,
+      trackUserLocation: true
     }),
   );
   map.addControl(new KeyControl(), 'top-right');
