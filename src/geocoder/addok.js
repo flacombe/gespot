@@ -18,7 +18,7 @@ class AddokGeocoder {
 
             return result;
         }
-        return await queryFct(query);
+        return queryFct(query);
     }
 }
 
