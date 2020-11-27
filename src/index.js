@@ -80,6 +80,9 @@ function init() {
   }, url_hash.getPosition()));
 
   var geocoder = new AddokGeocoder("https://demo.addok.xyz");
+  function geocode(query){
+    return geocoder.geocode(query);
+  }
 
   url_hash.onAdd(map);
   map.addControl(new mapboxgl.NavigationControl(), 'top-right');
@@ -96,7 +99,7 @@ function init() {
   map.addControl(
     new MapboxGeocoder({
       accessToken: "no_token",
-      localGeocoder: geocoder.geocode,
+      localGeocoder: geocode,
       localGeocoderOnly: true,
       zoom: 14,
       placeholder: 'Recherche',

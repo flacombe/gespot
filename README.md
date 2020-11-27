@@ -13,6 +13,13 @@ Tou need to link it to Nginx directory and eventually edit the server_name and l
 
     ln -s config/gespot.conf /etc/nginx/sites-enabled/gespot.conf
 
+## Cerbot signage
+
+Simply run:  
+```sh
+sudo certbot --nginx -d gespot.fr -d www.gespot.fr
+```
+
 ## Online resources
 
 A few files need to be edited to match the server configuration
