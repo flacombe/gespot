@@ -5,7 +5,7 @@ class AddokGeocoder {
         this._host = host;
     }
 
-    static geocode = async function (query){
+    _geocode = async function (query){
         // Requête HTTP
         let addokResp = await axios.get(_host+"/search/?q="+query+"&limit=10");
 
@@ -16,6 +16,10 @@ class AddokGeocoder {
         }
 
         return result;
+    }
+
+    static geocode (query){
+        return _geocode(query);
     }
 }
 
