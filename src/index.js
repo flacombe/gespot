@@ -1,5 +1,6 @@
 import './index.css';
 import mapboxgl from 'mapbox-gl';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
