@@ -15,6 +15,7 @@ import InfoBox from './infobox.js';
 import InfoPopup from './infopopup.js';
 import KeyControl from './key/key.js';
 import LayerSwitcher from './layerswitcher/layerswitcher.js';
+import AddokGeocoder from './geocoder/addok.js';
 
 import map_style from './style/style.json';
 import style_base from './style/style_base.js';
@@ -77,6 +78,8 @@ function init() {
     zoom:4.9
   }, url_hash.getPosition()));
 
+  var geocoder = new AddokGeocoder("https://demo.addok.xyz");
+
   url_hash.onAdd(map);
   map.addControl(new mapboxgl.NavigationControl(), 'top-right');
   map.addControl(
@@ -89,6 +92,16 @@ function init() {
   );
   map.addControl(new KeyControl(), 'top-right');
   map.addControl(new EditButton(), 'bottom-right');
+  map.addControl(
+    new MapboxGeocoder({
+      accessToken: "no_token",
+      localGeocoder: geocoder.geocode,
+      localGeocoderOnly: true,
+      zoom: 14,
+      placeholder: 'Recherche',
+      mapboxgl: mapboxgl
+    })
+  );
   new InfoPopup(gsp_layers.map(layer => layer['id']), 9).add(map);
   
   let warningArea_slider = el('input#panel_warningSlider', {
