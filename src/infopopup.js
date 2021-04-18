@@ -76,8 +76,8 @@ class InfoPopup {
       return null;
     }
 
-    if (key.startsWith('voltage')) {
-      value += ' kV';
+    if (key.startsWith('voltage') && key != 'voltage_level') {
+      value = value > 1 ? `${parseFloat(value).toFixed(0)} kV` : `${parseFloat(value).toFixed(3) * 1000} volts`;
     }
 
     if (key == 'output') {

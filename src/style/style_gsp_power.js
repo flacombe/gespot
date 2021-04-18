@@ -52,6 +52,14 @@ const warningAreas_filters = {
 }
 
 // === Frequency predicates
+const traction_freq_p = [
+  'all',
+  ['has', 'frequency'],
+  ['!=', ['get', 'frequency'], ''],
+  ['!=', ['to-number', ['get', 'frequency']], 50],
+  ['!=', ['to-number', ['get', 'frequency']], 60],
+];
+
 const hvdc_p = [
   'all',
   ['has', 'frequency'],
@@ -61,7 +69,7 @@ const hvdc_p = [
 
 // Stepwise function to assign colour by voltage:
 function voltage_color(field) {
-  let voltage_func = ['step', ['coalesce', ['get', field], 0]];
+  let voltage_func = ['step', ['to-number', ['coalesce', ['get', field], 0]]];
   for (let row of voltage_scale) {
     if (row[0] == null) {
       voltage_func.push(row[1]);
@@ -75,6 +83,8 @@ function voltage_color(field) {
     'case',
     hvdc_p,
     special_voltages['HVDC'], // HVDC (frequency == 0)
+    traction_freq_p,
+    special_voltages['Traction (<50 Hz)'], // Traction power
     voltage_func,
   ];
 }
@@ -87,11 +97,11 @@ function voltage_offset(index) {
   const spacing = 7;
 
   let offset = (index - 1) * spacing;
-  return [
-    'interpolate',
+  return ['interpolate',
     ['linear'],
     ['zoom'],
-    multi_voltage_min_zoom,
+    multi_voltage_min_zoom - 0.001, 0,
+    multi_voltage_min_zoom, 
     [
       'case',
       ['has', 'voltage_3'],
@@ -133,9 +143,9 @@ const voltage_line_thickness = [
       ['linear'],
       ['coalesce', ['get', 'voltage'], 0],
       0,
-      1.5,
+      1,
       100,
-      2,
+      1.8,
       800,
       4,
     ],
@@ -146,24 +156,27 @@ const label_offset = {
   stops: [[8, [0, 3]], [13, [0, 1]]],
 };
 
+const voltage = ['to-number', ['coalesce', ['get', 'voltage'], 0]];
+const output = ['to-number', ['coalesce', ['get', 'output'], 0]];
+
 // Determine substation visibility
 const substation_visible_p = [
   'all',
   [
     'any',
-    ['>', ['coalesce', ['get', 'voltage'], 0], 399],
+    ['>', voltage, 200],
     [
       'all',
-      ['>', ['coalesce', ['get', 'voltage'], 0], 200],
+      ['>', voltage, 200],
       ['>', ['zoom'], 6],
     ],
     [
       'all',
-      ['>', ['coalesce', ['get', 'voltage'], 0], 100],
+      ['>', voltage, 100],
       ['>', ['zoom'], 7],
     ],
-    ['all', ['>', ['coalesce', ['get', 'voltage'], 0], 25], ['>', ['zoom'], 9]],
-    ['all', ['>', ['coalesce', ['get', 'voltage'], 0], 9], ['>', ['zoom'], 10]],
+    ['all', ['>', voltage, 25], ['>', ['zoom'], 9]],
+    ['all', ['>', voltage, 9], ['>', ['zoom'], 10]],
     ['>', ['zoom'], 11],
   ],
   ['!=', ['get', 'substation'], 'transition'],
@@ -174,20 +187,36 @@ const substation_radius = [
   ['linear'],
   ['zoom'],
   5,
-  1,
+  [
+    'interpolate',
+    ['linear'],
+    voltage,
+    0,
+    0,
+    200,
+    1,
+    750,
+    3,
+  ],
   12,
   [
     'interpolate',
     ['linear'],
-    ['coalesce', ['get', 'voltage'], 0],
-    0,
+    voltage,
+    10,
+    1,
+    30,
     3,
+    100,
+    5,
     300,
     7,
     600,
     9,
   ],
+  15, 3
 ];
+
 
 // Determine the minimum zoom a point is visible at (before it can be seen as an
 // area), based on the area of the substation.
@@ -199,28 +228,37 @@ const substation_point_visible_p = [
   ['<', ['zoom'], 13],
 ];
 
+const converter_p = ['all',
+  ['==', ['get', 'substation'], 'converter'],
+  ['any',
+    ['>', voltage, 100],
+    ['>', ['zoom'], 6]
+  ]
+]
+
 const substation_label_visible_p = [
   'all',
   [
     'any',
-    ['>', ['coalesce', ['get', 'voltage'], 0], 399],
+    ['>', voltage, 399],
     [
       'all',
-      ['>', ['coalesce', ['get', 'voltage'], 0], 200],
+      ['>', voltage, 200],
       ['>', ['zoom'], 8],
     ],
     [
       'all',
-      ['>', ['coalesce', ['get', 'voltage'], 0], 100],
+      ['>', voltage, 100],
       ['>', ['zoom'], 10],
     ],
     [
       'all',
-      ['>', ['coalesce', ['get', 'voltage'], 0], 50],
-      ['>', ['zoom'], 16],
+      ['>', voltage, 50],
+      ['>', ['zoom'], 12],
     ],
-    ['>', ['zoom'], 16],
+    ['>', ['zoom'], 13],
   ],
+  ['any', ['==', ['to-number', ['get', 'area']], 0], ['<', ['zoom'], 17]],
   ['!=', ['get', 'substation'], 'transition'],
 ];
 
@@ -229,11 +267,11 @@ const power_visible_p = [
   'all',
   [
     'any',
-    ['>', ['coalesce', ['get', 'voltage'], 0], 199],
-    ['all', ['>', ['coalesce', ['get', 'voltage'], 0], 99], ['>', ['zoom'], 4]],
-    ['all', ['>', ['coalesce', ['get', 'voltage'], 0], 49], ['>', ['zoom'], 5]],
-    ['all', ['>', ['coalesce', ['get', 'voltage'], 0], 24], ['>', ['zoom'], 6]],
-    ['all', ['>', ['coalesce', ['get', 'voltage'], 0], 9], ['>', ['zoom'], 7]],
+    ['>', voltage, 199],
+    ['all', ['>', voltage, 99], ['>=', ['zoom'], 4]],
+    ['all', ['>', voltage, 49], ['>=', ['zoom'], 5]],
+    ['all', ['>', voltage, 24], ['>=', ['zoom'], 6]],
+    ['all', ['>', voltage, 9], ['>=', ['zoom'], 9]],
     ['>', ['zoom'], 10],
   ],
   [
@@ -250,17 +288,17 @@ const power_ref_visible_p = [
     'any',
     [
       'all',
-      ['>', ['coalesce', ['get', 'voltage'], 0], 330],
+      ['>', voltage, 330],
       ['>', ['zoom'], 7],
     ],
     [
       'all',
-      ['>', ['coalesce', ['get', 'voltage'], 0], 200],
+      ['>', voltage, 200],
       ['>', ['zoom'], 8],
     ],
     [
       'all',
-      ['>', ['coalesce', ['get', 'voltage'], 0], 100],
+      ['>', voltage, 100],
       ['>', ['zoom'], 9],
     ],
     ['>', ['zoom'], 10],
@@ -272,6 +310,7 @@ const power_ref_visible_p = [
   ],
 ];
 
+
 const construction_label = [
   'case',
   construction_p,
@@ -279,17 +318,58 @@ const construction_label = [
   '',
 ];
 
+
+const plant_label_visible_p = [
+  'any',
+  ['>', output, 1000],
+  ['all', ['>', output, 750], ['>', ['zoom'], 5]],
+  ['all', ['>', output, 250], ['>', ['zoom'], 6]],
+  ['all', ['>', output, 100], ['>', ['zoom'], 7]],
+  ['all', ['>', output, 10], ['>', ['zoom'], 9]],
+  ['all', ['>', output, 1], ['>', ['zoom'], 11]],
+  ['>', ['zoom'], 12],
+];
+
+const pretty_output = ['case',
+  ['>', output, 1],
+  ['concat', output, ' MW'],
+  ['concat', ['round', ['*', output, 1000]], ' kW']
+];
+
+const plant_label = ['step', ['zoom'],
+    ['concat', ['get', 'name']],
+    9,
+    ['case',
+      ['all', ['!', ['has', 'name']], ['has', 'output']],
+      ['concat', pretty_output, construction_label],
+      ['has', 'output'],
+      ['concat', ['get', 'name'], ' \n', pretty_output, '\n', construction_label],
+      ['get', 'name']
+    ],
+];
+
+function plant_image() {
+  let expr = ['match', ['get', 'source']];
+  for (const [key, value] of Object.entries(plant_types)) {
+    expr.push(key, value);
+  }
+  expr.push('power_plant'); // default
+  return expr;
+}
+
+const construction_opacity = ['case', construction_p, 0.3, 1];
+const power_line_opacity = ['interpolate', ['linear'], ['zoom'],
+  4, ['case', construction_p, 0.3, 0.6],
+  8, ['case', construction_p, 0.3, 1]
+];
+const plant_construction_opacity = construction_opacity;
+
 const freq = [
   'case',
   hvdc_p,
   ' DC',
-  '',
-];
-
-const circuits = [
-  'case',
-  ['all', ['has', 'circuits'], ['>', ['to-number', ['get', 'circuits']], 1]],
-  ['concat', ['get', 'circuits'], '×'],
+  traction_freq_p,
+  ['concat', ' ', ['get', 'frequency'], ' Hz'],
   '',
 ];
 
@@ -322,7 +402,7 @@ const line_voltage = [
 
 const line_label = [
   'case',
-  ['all', ['has', 'voltage'], ['!=', ['get', 'name'], '']],
+  ['all', ['has', 'voltage'], ['has', 'name'], ['!=', ['get', 'name'], '']],
   [
     'concat',
     ['get', 'name'],
@@ -333,7 +413,7 @@ const line_label = [
     construction_label,
   ],
   ['has', 'voltage'],
-  ['concat', circuits, line_voltage, freq, construction_label],
+  ['concat', line_voltage, freq, construction_label],
   ['get', 'name'],
 ];
 
@@ -344,7 +424,7 @@ const substation_label_detail = [
     'concat',
     ['get', 'name'],
     ' ',
-    ['get', 'voltage'],
+    voltage,
     ' kV',
     freq,
     construction_label,
@@ -353,7 +433,7 @@ const substation_label_detail = [
   [
     'concat',
     'Substation ',
-    ['get', 'voltage'],
+    voltage,
     ' kV',
     freq,
     construction_label,
@@ -679,6 +759,7 @@ const layers = [
     zorder: 562,
     id: 'power_substation_ref_label',
     type: 'symbol',
+    filter: substation_label_visible_p,
     source: 'gespot',
     'source-layer': 'power_substation_point',
     minzoom: 14.5,
@@ -700,10 +781,8 @@ const layers = [
     filter: substation_label_visible_p,
     'source-layer': 'power_substation_point',
     minzoom: 8,
-    maxzoom: 24,
-    paint: text_paint,
     layout: {
-      'symbol-sort-key': ['-', 10000, ['get', 'voltage']],
+      'symbol-sort-key': ['-', 10000, voltage],
       'symbol-z-order': 'source',
       'text-field': substation_label,
       'text-anchor': 'top',
@@ -718,7 +797,7 @@ const layers = [
         [
           'interpolate',
           ['linear'],
-          ['coalesce', ['get', 'voltage'], 0],
+          voltage,
           0,
           10,
           400,
@@ -726,7 +805,8 @@ const layers = [
         ],
       ],
       'text-max-width': 8,
-    }
+    },
+    paint: text_paint,
   }
 ];
 
