@@ -76,7 +76,7 @@ class InfoPopup {
       return null;
     }
 
-    if (key.startsWith('voltage')) {
+    if (key.startsWith('voltage') && key != 'voltage_level') {
       value += ' kV';
     }
 
