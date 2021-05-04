@@ -11,6 +11,13 @@ const voltage_scale = [
   [550, '#00C1CF'],
 ];
 
+const warning_scale = {
+  "DMA":"#DD0000",
+  "DLVR":"#ffc107",
+  "DLVS":"#ffc107",
+  "DLI":"#17a2b8"
+};
+
 const powerColor = '#d00000';
 const powerTextPaint = Object.assign({
   "text-color":powerColor
@@ -26,30 +33,6 @@ const utilityPower_p = [
   'all',
   ['==', ['get', 'utility'], 'power'],
 ];
-
-// Power areas management
-const warningAreas_filters = {
-  "DMA":[
-    'all',
-    ['==', ['get', 'area_level'], 'DMA'],
-    ['!', underground_p]
-  ],
-  "DLVR":[
-    'all',
-    ['==', ['get', 'area_level'], 'DLVR'],
-    ['!', underground_p]
-  ],
-  "DLVS":[
-    'all',
-    ['==', ['get', 'area_level'], 'DLVS'],
-    ['!', underground_p]
-  ],
-  "DLI":[
-    'all',
-    ['==', ['get', 'area_level'], 'DLI'],
-    ['!', underground_p]
-  ]
-}
 
 // === Frequency predicates
 const traction_freq_p = [
@@ -157,7 +140,7 @@ const label_offset = {
 };
 
 const voltage = ['to-number', ['coalesce', ['get', 'voltage'], 0]];
-const output = ['to-number', ['coalesce', ['get', 'output'], 0]];
+const circuits = ['to-number', ['coalesce', ['get', 'circuits'], 1]];
 
 // Determine substation visibility
 const substation_visible_p = [
@@ -318,45 +301,6 @@ const construction_label = [
   '',
 ];
 
-
-const plant_label_visible_p = [
-  'any',
-  ['>', output, 1000],
-  ['all', ['>', output, 750], ['>', ['zoom'], 5]],
-  ['all', ['>', output, 250], ['>', ['zoom'], 6]],
-  ['all', ['>', output, 100], ['>', ['zoom'], 7]],
-  ['all', ['>', output, 10], ['>', ['zoom'], 9]],
-  ['all', ['>', output, 1], ['>', ['zoom'], 11]],
-  ['>', ['zoom'], 12],
-];
-
-const pretty_output = ['case',
-  ['>', output, 1],
-  ['concat', output, ' MW'],
-  ['concat', ['round', ['*', output, 1000]], ' kW']
-];
-
-const plant_label = ['step', ['zoom'],
-    ['concat', ['get', 'name']],
-    9,
-    ['case',
-      ['all', ['!', ['has', 'name']], ['has', 'output']],
-      ['concat', pretty_output, construction_label],
-      ['has', 'output'],
-      ['concat', ['get', 'name'], ' \n', pretty_output, '\n', construction_label],
-      ['get', 'name']
-    ],
-];
-
-function plant_image() {
-  let expr = ['match', ['get', 'source']];
-  for (const [key, value] of Object.entries(plant_types)) {
-    expr.push(key, value);
-  }
-  expr.push('power_plant'); // default
-  return expr;
-}
-
 const construction_opacity = ['case', construction_p, 0.3, 1];
 const power_line_opacity = ['interpolate', ['linear'], ['zoom'],
   4, ['case', construction_p, 0.3, 0.6],
@@ -399,6 +343,85 @@ const line_voltage = [
   ['concat', ['get', 'voltage'], ' kV'],
   '',
 ];
+
+const warningWidth = function (warning){
+  let widthFunc = 50;
+  switch(warning){
+    case "DMA":
+      widthFunc = ['case',
+      [
+        'all',
+        ['<', voltage, 1]
+      ],
+      ['*', circuits, 0.3],
+      [
+        'all',
+        ['<', voltage, 50],
+        ['>=', voltage, 1]
+      ],
+      ['*', circuits, 2],
+      [
+        'all',
+        ['<', voltage, 250],
+        ['>=', voltage, 50]
+      ],
+      ['*', circuits, ['+', ['/', voltage, 100], 3]],
+      ['*', circuits, ['+', ['/', voltage, 100], 4]]];
+      break;
+  
+    case "DLVR":
+      widthFunc = ['case',
+      [
+        'all',
+        ['<', voltage, 1]
+      ],
+      ['*', circuits, 0.3],
+      [
+        'all',
+        ['<', voltage, 50],
+        ['>=', voltage, 1]
+      ],
+      ['*', circuits, 4],
+      [
+        'all',
+        ['<', voltage, 250],
+        ['>=', voltage, 50]
+      ],
+      ['*', circuits, ['+', ['/', voltage, 100], 4]],
+      ['*', circuits, ['+', ['/', voltage, 100], 5]]];
+      break;
+
+    case "DLVS":
+      widthFunc = ['case',
+      [
+        'all',
+        ['<', voltage, 1]
+      ],
+      ['*', circuits, 3],
+      [
+        'all',
+        ['<', voltage, 50],
+        ['>=', voltage, 1]
+      ],
+      ['*', circuits, 5],
+      [
+        'all',
+        ['<', voltage, 250],
+        ['>=', voltage, 50]
+      ],
+      ['*', circuits, ['+', ['/', voltage, 100], 6]],
+      ['*', circuits, ['+', ['/', voltage, 100], 6]]];
+      break;
+  }
+
+  return [
+    'interpolate', 
+    ['exponential', 2], 
+    ['zoom'],
+    10, ["*", widthFunc, 2, ["^", 2, -6]], 
+    24, ["*", widthFunc, 2, ["^", 2, 8]]
+  ];
+}
 
 const line_label = [
   'case',
@@ -453,28 +476,20 @@ const layers = [
   {
     zorder: 50,
     id: 'power_line_warning',
-    type: 'fill',
+    type: 'line',
     source: 'gespot',
-    filter: warningAreas_filters["DMA"],
-    minzoom: 14,
-    'source-layer': 'power_line_warningareas',
+    'source-layer': 'power_line',
+    filter: ['all', ['!', underground_p], power_visible_p],
+    minzoom: 10,
     paint: {
-      'fill-color': [
-        'case',
-        warningAreas_filters["DMA"],
-        "#DD0000",
-        warningAreas_filters["DLVR"],
-        "#ffc107",
-        warningAreas_filters["DLVS"],
-        "#ffc107",
-        "#17a2b8"
-      ],
-      'fill-opacity': 0.25,
-      'fill-outline-color': 'rgba(0, 0, 0, 1)'
+      'line-color': warning_scale["DMA"],
+      'line-width': warningWidth("DMA"),
+      'line-opacity': 0.25,
     },
-    layout:{
-      "visibility":"none"
-    }
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
+    },
   },
   {
     zorder: 161,
@@ -810,4 +825,4 @@ const layers = [
   }
 ];
 
-export {layers as default, voltage_scale, special_voltages, warningAreas_filters, powerColor};
+export {layers as default, voltage_scale, warning_scale, special_voltages, powerColor, warningWidth};
