@@ -19,7 +19,7 @@ import LayerSwitcher from './layerswitcher/layerswitcher.js';
 import map_style from './style/style.json';
 import style_base from './style/style_base.js';
 import style_labels from './style/style_labels.js';
-import {default as style_gsp_power, voltage_scale, special_voltages, warningAreas_filters} from './style/style_gsp_power.js';
+import {default as style_gsp_power, warning_scale, warningWidth} from './style/style_gsp_power.js';
 import style_gsp_telecoms from './style/style_gsp_telecoms.js';
 
 function init() {
@@ -112,19 +112,23 @@ function init() {
   $("#panel_warningSlider").slider().on("slideStop", function(){
     switch(this.value){
       case "1":
-        map.setFilter("power_line_warning", warningAreas_filters["DMA"]);
+        map.setPaintProperty("power_line_warning", "line-color", warning_scale["DMA"]);
+        map.setPaintProperty("power_line_warning", "line-width", warningWidth("DMA"));
         map.setLayoutProperty("power_line_warning", 'visibility', 'visible');
         break;
       case "2":
-        map.setFilter("power_line_warning", warningAreas_filters["DLVR"]);
+        map.setPaintProperty("power_line_warning", "line-color", warning_scale["DLVR"]);
+        map.setPaintProperty("power_line_warning", "line-width", warningWidth("DLVR"));
         map.setLayoutProperty("power_line_warning", 'visibility', 'visible');
         break;
       case "3":
-        map.setFilter("power_line_warning", warningAreas_filters["DLVS"]);
+        map.setPaintProperty("power_line_warning", "line-color", warning_scale["DLVS"]);
+        map.setPaintProperty("power_line_warning", "line-width", warningWidth("DLVS"));
         map.setLayoutProperty("power_line_warning", 'visibility', 'visible');
         break;
       case "4":
-        map.setFilter("power_line_warning", warningAreas_filters["DLI"]);
+        map.setPaintProperty("power_line_warning", "line-color", warning_scale["DLI"]);
+        map.setPaintProperty("power_line_warning", "line-width", warningWidth("DLI"));
         map.setLayoutProperty("power_line_warning", 'visibility', 'visible');
         break;
       default:
