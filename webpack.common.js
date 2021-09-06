@@ -27,9 +27,9 @@ module.exports = {
     new SpritezeroWebpackPlugin({
       source: 'sprites/*.svg'
     }),
-    new CopyPlugin([
-      {from: 'sprites', to: 'style/sprites'}
-    ]),
+    new CopyPlugin({
+      patterns: [{ from: "sprites", to: "style/sprites" }]
+    }),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery"
