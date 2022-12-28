@@ -25,7 +25,7 @@
     "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^9.0.1",
-    "css-loader": "^1.0.1",
+    "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.3.2",
     "in-browser-language": "^1.0.3",
     "spritezero-webpack-plugin": "^0.1.1",
