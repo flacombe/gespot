@@ -3,3 +3,4 @@ node_modules/
 dist/index.html
 dist/main.*
 dist/style/*
+package-lock.json
