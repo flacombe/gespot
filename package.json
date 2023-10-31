@@ -37,14 +37,14 @@
     "webpack-pwa-manifest": "^4.3.0"
   },
   "dependencies": {
-    "bootstrap": "^4.5.0",
+    "bootstrap": "^4.6.2",
     "bootstrap-slider": "^11.0.2",
     "bootstrap4-toggle": "^3.6.1",
     "jquery": "^3.5.1",
     "lodash.invert": "^4.3.0",
     "lodash.isequal": "^4.5.0",
     "lodash.sortby": "^4.7.0",
-    "mapbox-gl": "^1.10.1",
+    "maplibre-gl": "^2.4.0",
     "popper.js": "^1.16.1",
     "redom": "^3.24.2",
     "title-case": "^2.1.1"

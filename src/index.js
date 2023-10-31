@@ -1,5 +1,5 @@
 import './index.css';
-import mapboxgl from 'mapbox-gl';
+import maplibregl from 'maplibre-gl';
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -23,7 +23,7 @@ import {default as style_gsp_power, warning_scale, warningWidth} from './style/s
 import style_gsp_telecoms from './style/style_gsp_telecoms.js';
 
 function init() {
-  if (!mapboxgl.supported({failIfMajorPerformanceCaveat: true})) {
+  if (!maplibregl.supported({failIfMajorPerformanceCaveat: true})) {
     const infobox = new InfoBox('Warning');
     infobox.update(
       'Your browser may have performance or functionality issues with OpenInfraMap.<br/>' +
@@ -33,7 +33,7 @@ function init() {
     mount(document.body, infobox);
   }
 
-  mapboxgl.setRTLTextPlugin(
+  maplibregl.setRTLTextPlugin(
     'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',
     null,
     true, // Lazy load the plugin
@@ -67,7 +67,7 @@ function init() {
     map_style['sprite'] = 'http://localhost:8080/style/sprite';
   }
 
-  var map = new mapboxgl.Map(Object.assign({
+  var map = new maplibregl.Map(Object.assign({
     container: 'map',
     style: map_style,
     hash: false,
@@ -78,9 +78,9 @@ function init() {
   }, url_hash.getPosition()));
 
   url_hash.onAdd(map);
-  map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+  map.addControl(new maplibregl.NavigationControl(), 'top-right');
   map.addControl(
-    new mapboxgl.GeolocateControl({
+    new maplibregl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true,
       },

@@ -1,4 +1,4 @@
-@import '~mapbox-gl/dist/mapbox-gl.css';
+@import '~maplibre-gl/dist/maplibre-gl.css';
 
 html {
   width: 100%;
@@ -80,13 +80,13 @@ a {
   clear: both;
 }
 
-.mapboxgl-ctrl-attrib {
+.maplibregl-ctrl-attrib {
   font-size: 10px;
   line-height: 14px;
   border-radius: 4px 0px 0px 0px;
 }
 
-.mapboxgl-ctrl-top-right {
+.maplibregl-ctrl-top-right {
   top: 120px !important
 }
 
