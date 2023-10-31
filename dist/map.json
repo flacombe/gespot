@@ -6,7 +6,7 @@
   "center": [0, 0, 0],
   "format": "pbf",
   "minzoom": 2,
-  "maxzoom": 21,
+  "maxzoom": 17,
   "tiles": ["https://gespot.fr/tiles/{z}/{x}/{y}.pbf"],
   "vector_layers": [
     {"id": "power_line", "description": "Power lines and cables", "fields": {}},
