@@ -2,11 +2,11 @@ table.item_info th {
 	text-align: left;
 }
 
-.mapboxgl-popup {
+.maplibregl-popup {
   max-width: 350px !important; 
 }
 
-.mapboxgl-popup h3 {
+.maplibregl-popup h3 {
   margin-top: 0px;
   margin-bottom: 5px;
 }

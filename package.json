@@ -44,8 +44,7 @@
     "lodash.invert": "^4.3.0",
     "lodash.isequal": "^4.5.0",
     "lodash.sortby": "^4.7.0",
-    "mapbox-gl": "^1.10.1",
-    "popper.js": "^1.16.1",
+    "maplibre-gl": "^2.4.0",
     "redom": "^3.24.2",
     "title-case": "^2.1.1"
   }

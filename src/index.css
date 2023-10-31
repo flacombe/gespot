@@ -80,13 +80,13 @@ a {
   clear: both;
 }
 
-.mapboxgl-ctrl-attrib {
+.maplibregl-ctrl-attrib {
   font-size: 10px;
   line-height: 14px;
   border-radius: 4px 0px 0px 0px;
 }
 
-.mapboxgl-ctrl-top-right {
+.maplibregl-ctrl-top-right {
   top: 120px !important
 }
 
