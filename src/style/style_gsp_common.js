@@ -32,9 +32,11 @@ function scale_color(tag, scale) {
 
 const materialColor_scale = [
   ['wood', '#815727'],
-  ['metal', '#99a89e'],
+  ['metal', '#99a89e'], // deprecated
+  ['steel', '#99a89e'],
   ['concrete', '#4d4d4d'],
-  ['composite', '#6087b8'],
+  ['composite', '#6087b8'], // deprecated
+  ['epoxy', '#6087b8'],
   [null,'#dedede']
 ];
 

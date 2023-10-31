@@ -6,6 +6,7 @@ import browserLanguage from 'in-browser-language';
 import {el, text, mount, unmount, setChildren, setStyle} from 'redom';
 
 const hidden_keys = [
+  'osm_id',
   'name',
   'wikidata',
   'wikipedia',

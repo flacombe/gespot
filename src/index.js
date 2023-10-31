@@ -72,7 +72,7 @@ function init() {
     style: map_style,
     hash: false,
     minZoom: 2,
-    maxZoom: 18.9,
+    maxZoom: 20.9,
     center: [2.727, 46.125],
     zoom:4.9
   }, url_hash.getPosition()));
