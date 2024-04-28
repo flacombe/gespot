@@ -1,0 +1,14 @@
+{
+  "tilejson": "2.2.0",
+  "name": "natural",
+  "attribution": "<a href=\"https://www.openstreetmap.org/copyright\">© OpenStreetMap contributors</a>",
+  "bounds": [-180, -85.0511, 180, 85.0511],
+  "center": [0, 0, 0],
+  "format": "pbf",
+  "minzoom": 11,
+  "maxzoom": 17,
+  "tiles": ["https://gespot.fr/natural/{z}/{x}/{y}.pbf"],
+  "vector_layers": [
+    {"id": "forest", "description": "Trees and forests areas", "fields": {}}
+  ]
+}

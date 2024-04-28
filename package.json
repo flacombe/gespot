@@ -1,11 +1,13 @@
 {
   "name": "gespot",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
-  "main": "webpack.common.js",
+  "type": "module",
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.dev.js --mode development --host 0.0.0.0",
-    "build": "webpack --config webpack.prod.js --mode production"
+    "start": "vite",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "test": "eslint . && tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -18,35 +20,29 @@
   },
   "homepage": "https://github.com/flacombe/gespot#readme",
   "devDependencies": {
-    "@babel/core": "^7.23.2",
-    "@babel/preset-env": "^7.23.2",
-    "@mapbox/spritezero": "^6.1.2",
-    "babel-loader": "^8.3.0",
-    "babel-preset-env": "^1.7.0",
-    "clean-webpack-plugin": "^0.1.19",
-    "copy-webpack-plugin": "^9.0.1",
-    "css-loader": "^6.7.3",
-    "html-webpack-plugin": "^5.3.2",
+    "@russss/maplibregl-layer-switcher": "^1.2.3",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.2",
     "in-browser-language": "^1.0.3",
-    "spritezero-webpack-plugin": "^0.1.1",
-    "style-loader": "^3.3.3",
-    "webpack": "^5.89.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.15.1",
-    "webpack-merge": "^4.2.2",
-    "webpack-pwa-manifest": "^4.3.0"
+    "prettier": "^3.1.1",
+    "typescript": "^5.0.2",
+    "vite": "^5.0.12",
+    "vite-plugin-render-svg": "^1.1.1"
   },
   "dependencies": {
+    "@types/bootstrap": "^4.6.2",
+    "@types/bootstrap-slider": "^11.0.2",
+    "@types/jquery": "^3.5.1",
+    "jquery": "^3.5.1",
     "bootstrap": "^4.6.2",
     "bootstrap-slider": "^11.0.2",
-    "bootstrap4-toggle": "^3.6.1",
-    "jquery": "^3.5.1",
     "lodash.invert": "^4.3.0",
     "lodash.isequal": "^4.5.0",
     "lodash.sortby": "^4.7.0",
-    "maplibre-gl": "^2.4.0",
-    "popper.js": "^1.16.1",
-    "redom": "^3.24.2",
-    "title-case": "^2.1.1"
+    "maplibre-gl": "^3.6.2",
+    "redom": "^3.29.1",
+    "title-case": "^3.0.3"
   }
 }
