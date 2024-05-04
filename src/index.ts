@@ -50,7 +50,7 @@ function init() {
   })
 
   const layers = {
-    Elec: 'power_',
+    'Electricité': 'power_',
     'Télécoms': 'telecoms_',
     'Végétation': 'vegetation_',
   };
