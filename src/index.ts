@@ -54,7 +54,7 @@ function init() {
     'Télécoms': 'telecoms_',
     'Végétation': 'vegetation_',
   };
-  const layers_enabled = ['Elec', 'Télécoms'];
+  const layers_enabled = ['Electricité', 'Télécoms'];
   const layer_switcher = new LayerSwitcher(layers, layers_enabled);
   var url_hash = new URLHash(layer_switcher);
   layer_switcher.urlhash = url_hash;
