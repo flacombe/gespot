@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A propos &mdash;Gespot </title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+   <div class="container">
+	<header>
+      <h1>Gespot</h1>
+	</header>
+    <div class="row">
+      <div class="col-lg-6">
+
+      <p class="lead"><a href="/">Cette application</a> est une mise en valeur des réseaux aériens électriques, de télécommunication
+      et leurs supports connus de la base de données&nbsp;<a href="http://www.openstreetmap.org/">OpenStreetMap</a>.</p>
+      <p>Ces données ne sont pas toutes visibles sur des rendus standards. 
+      C'est pourquoi il est utile d'avoir des aplications comme celles-ci plus thématiques
+      pour prendre conscience de la diversité des données disponibles.</p>
+
+      <h2>Comment contribuer ?</h2>
+      <p>Il est possible de compléter ou de corriger des données manquantes. Visitez <a href="https://learnosm.org">learnOSM</a> pour cela.
+      <p>
+          Si vous avez déjà quelques compétences et expérience dans la contribution OpenStreetMap,
+          visitez les pages de wiki <a href="http://wiki.openstreetmap.org/wiki/Power">Power</a> et <a href="http://wiki.openstreetmap.org/wiki/WikiProject_Telecoms">WikiProject Telecoms</a>.
+      </p>
+
+      <h3>Vous êtes impliqués dans le déploiement FTTH en France ?</h3>
+      <p>Le déploiement de la fibre optique présente une opportunité pour fiabiliser la connaissance de nos réseaux aériens.
+        <br/>Les études de charges réalisées constituent une connaissance coûteuse qu'il ne faut pas oublier.
+      </p>
+      <p>Personnes publiques ou privées concernées par une délégation de service public, vous êtes invités à publier, par exemple sur la plateforme <a href="https://data.gouv.fr">Data.gouv.fr</a>, les données d'inventaire patrimoniales au format GraceTHD.</p>
+      <p>Exploitants de la zone d'investissement privé, vous êtes invités à vous joindre à l'effort en publiant des données équivalentes, en particulier à propos des supports électriques.</p>
+
+      <h2>Pourquoi les réseaux aériens ?</h2>
+      <p>Les réseaux aériens sont sensibles à divers aléas et représentent un lieu de mutualisation plus important qu'en souterrain encore.
+      <br/>La connaissance de l'existant permet d'en assurer la maintenance et favorise le développement de nouvelles infrastructures.</p>
+
+      <h2>Et les réseaux souterrains ?</h2>
+      <p>Il est possible de retrouver une cartographie identique pour les réseaux souterrains sur <a href="https://map.infos-reseaux.com">cette autre adresse</a></p>
+
+      <h2>Quelles technologies sont utilisées ?</h2>
+      <p>Les outils suivants sont mis en oeuvre pour permettre à cette carte d'exister :</p>
+      <ul>
+        <li><a href="https://www.postgresql.org/">PostgreSQL</a>/<a href="http://postgis.net/">PostGIS</a> pour le stockage
+        <li><a href="https://imposm.org/">Imposm3</a> pour filtrer et importer les données OpenStreetMap
+        <li><a href="http://tegola.io/">Tegola</a> pour générer et servir des tuiles vectorielles
+	      <li><a href="https://maplibre.org/maplibre-gl-js/docs/">Maplibre GL JS</a> pour l'interface web</li>
+      </ul>
+      
+      <p>Le fond de carte est gracieusement fourni par <a href="https://www.maptiler.com/"><img width="150px" src="img/maptiler.png"></a>.</p>
+
+      <h2>Où se trouve le code ?</h2>
+      <p>Le dépot officiel du projet est situé sur <a href="https://github.com/flacombe/gespot">GitHub</a>. Des mises à jour sont régulièrement apportées.</p>
+      <p>Il s'agit d'un fork d'<a href="https://www.openinframap.org">OpenInfraMap</a> dont le code est également disponible sur <a href="https://github.com/openinframap">GitHub</a>.
+      
+      <h2>Qui a fait ça ?</h2>
+      <p><a href="https://russ.garrett.co.uk">Russ</a> et <a href="https://github.com/flacombe">François</a>, passionés par les infrastructures.</p>
+      <p>L'hébergement et la plateforme ont été fournis gracieusement par <a href="https://twitter.com/DorianGaliana">Dorian Galiana</a> sans qui le développement aurait été beaucoup plus long.
+      <br/>L'hébergement est actuellement assuré par <a href="https://www.openstreetmap.fr/">l'association OpenStreetMap France</a></p>
+      
+      <p>Inutile de nous contacter à propos de données sous copyright ou demandes similaires, vous trouverez certainement plus d'informations
+         sur <a href="https://wiki.osmfoundation.org/wiki/Takedown_procedure">OpenStreetMap</a>.</p>         
+
+      <h2>Comment accéder aux données ?</h2>
+        <p>Toutes les données affichées viennent d'OpenStreetMap.</p>
+        <p>Vous pouvez utiliser les tuiles vectorielles produites par nos serveurs, dans les limites du raisonnable et hors production.
+        <br/>Pour une utilisation soutenue ou industrielle, merci de mettre en place votre propre plateforme.
+        <br/>Référez-vous <a href="/map.json">au fichier</a> de définition des couches.</p>
+
+        <p>Pour des extracts limités de données, rendez-vous sur <a href="https://overpass-turbo.eu/">Overpass Turbo</a> pour obtenir du GeoJson ou similaire.
+        
+        <p>Pour des volumes plus importants, vous serez obligé de traiter le jeu de données complet d'OSM ce qui est relativement complexe.</p>
+
+        <p>Dans tous les cas, pour utiliser ces données, vous devrez vous conformer aux <a href="https://www.openstreetmap.org/copyright">termes de la licence OpenStreetMap</a>
+        <br/>Cela requiert d'apposer une attribution explicite directement sur l'affichage de la carte. Une attribution de ce site et "OpenInfraMap" comportant des liens sera apprécié même si ce n'est pas obligatoire.</p>
+
+      </div>
+      <div class="col-lg-4">
+        <a class="twitter-timeline" data-width="390" data-height="800" href="https://twitter.com/InfosReseaux?ref_src=twsrc%5Etfw">InfosReseaux.com</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+      </div>
+    </div>
+  </div>
+</body>
+</html>
