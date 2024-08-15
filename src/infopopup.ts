@@ -6,6 +6,7 @@ import { titleCase } from 'title-case'
 import browserLanguage from 'in-browser-language'
 import { local_name_tags } from './l10n.ts'
 import friendlyNames from './friendlynames.ts'
+import designIcons from './designicons.ts'
 import { el, mount, setChildren, RedomElement } from 'redom'
 
 const hidden_keys = [
@@ -77,6 +78,22 @@ class InfoPopup {
     })
   }
 
+  friendlyRender(label: string) {
+    if (label in friendlyNames) {
+      return friendlyNames[label]
+    } else {
+      return label
+    }
+  }
+
+  designIcon(feature: string) {
+    if (feature in designIcons) {
+      return designIcons[feature]
+    } else {
+      return null
+    }
+  }
+
   renderKey(key: string, value: any) {
     if (hidden_keys.includes(key) || key.startsWith('name_') || key.startsWith('voltage') || !value) {
       return null
@@ -106,7 +123,7 @@ class InfoPopup {
       })
       key = 'Website'
     } else {
-      key = titleCase(key)
+      key = titleCase(this.friendlyRender(key))
     }
 
     return el('tr', el('th', key), el('td', value))
@@ -123,15 +140,10 @@ class InfoPopup {
     }
 
     if (!title_text) {
-      const layer_id = feature.layer['id']
-      if (layer_id in friendlyNames) {
-        title_text = friendlyNames[layer_id]
-      } else {
-        title_text = feature.layer['id']
-      }
+      title_text = this.friendlyRender(feature.layer['id'])
     }
 
-    const container = el('div.nameContainer', el('h3', title_text))
+    const container = el('h3', title_text)
 
     // If we're showing a translated name, also show the name tag
     if (feature.properties.name && title_text != feature.properties.name) {
@@ -170,29 +182,52 @@ class InfoPopup {
       .filter((x) => x !== null) as HTMLTableRowElement[]
     setChildren(attrs_table, renderedProperties)
 
-    const content = el('div', this.nameTags(feature))
+    const content = el('div.container.p-0')
+    const mainrow = el('div.row')
+    mount(content, mainrow)
 
-    if (feature.properties['voltage']) {
-      mount(content, this.voltageField(feature))
+    // Design icon
+    let featureRef = feature.layer['id'].replace('_point', '').replace('_symbol', '');
+    let feature_iconpath;
+    if (feature.properties['design_ref']){
+      feature_iconpath = this.designIcon(featureRef+'_'+feature.properties['design_ref'])
+    }else if (feature.properties['line_attachment'] && feature.properties['line_arrangement']){
+      feature_iconpath = this.designIcon(featureRef+'_'+feature.properties['line_attachment']+'_'+feature.properties['line_arrangement'])
+    }
+    if (feature_iconpath != null) {
+      mount(mainrow, el('div.col-5', el('img.designicon', { src: feature_iconpath })))
     }
 
-    const links_container = el('div')
+    const maincontent = el('div.col-7')
+    mount(mainrow, maincontent);
+
+    mount(maincontent, this.nameTags(feature));
+
+    if (feature.properties['voltage']) {
+      mount(maincontent, this.voltageField(feature))
+    }
+
+    const linksrow = el('div.row.no-gutters')
+    mount(content, linksrow);
+    const linkscontent = el('div.col-12.pt-3')
+    mount(linksrow, linkscontent)
+
     const wikidata_div = el('div')
     if (feature.properties['wikidata']) {
-      this.fetch_wikidata(feature.properties['wikidata'], wikidata_div, links_container)
+      this.fetch_wikidata(feature.properties['wikidata'], wikidata_div, linkscontent)
     } else {
       const wp_link = this.wp_link(feature.properties['wikipedia'])
       if (wp_link) {
-        mount(links_container, wp_link)
+        mount(linkscontent, wp_link)
       }
     }
 
-    mount(content, wikidata_div)
-    mount(content, attrs_table)
+    mount(maincontent, wikidata_div)
+    mount(maincontent, attrs_table)
 
     if (feature.properties['osm_id']) {
       mount(
-        links_container,
+        linkscontent,
         el('a', el('div.ext_link.osm_link'), {
           href: this.osmLink(feature.properties['osm_id'], feature.properties['is_node']),
           target: '_blank',
@@ -200,17 +235,7 @@ class InfoPopup {
         })
       )
     }
-    mount(content, links_container)
 
-    if (feature.layer.id.startsWith('power_plant')) {
-      mount(
-        content,
-        el('a', 'More info', {
-          href: '/stats/object/plant/' + feature.properties['osm_id'],
-          target: '_blank'
-        })
-      )
-    }
     return content
   }
 

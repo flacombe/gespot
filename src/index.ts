@@ -1,6 +1,6 @@
 import './index.css'
 import maplibregl from 'maplibre-gl'
-import { el } from 'redom'
+import { el, mount } from 'redom'
 
 import $ from "jquery";
 
@@ -16,6 +16,7 @@ import { LayerSpecificationWithZIndex } from './style/types.js'
 import EditButton from './editbutton.js'
 import InfoPopup from './infopopup.js'
 import KeyControl from './key/key.js'
+import WarningBox from './warning-box/warning-box.js'
 
 import map_style from './style/style.js'
 import style_base from './style/style_base.ts'
@@ -25,16 +26,35 @@ import {telecomLayers as style_gsp_telecoms} from './style/style_gsp_telecoms.js
 import {vegetationLayers as style_gsp_vegetation} from './style/style_gsp_vegetation.js'
 import loadIcons from './loadIcons.js'
 
+function isWebglSupported() {
+  if (window.WebGLRenderingContext) {
+    const canvas = document.createElement('canvas')
+    try {
+      const context =
+        canvas.getContext('webgl2', { failIfMajorPerformanceCaveat: true }) ||
+        canvas.getContext('webgl', { failIfMajorPerformanceCaveat: true })
+      if (context && typeof context.getParameter == 'function') {
+        return true
+      }
+    } catch (e) {
+      // WebGL is supported, but disabled
+    }
+    return false
+  }
+  // WebGL not supported
+  return false
+}
+
 function init() {
-  /*if (!maplibregl.supported({failIfMajorPerformanceCaveat: true})) {
-    const infobox = new InfoBox('Warning');
+  if (!isWebglSupported()) {
+    const infobox = new WarningBox('WebGL est absent')
     infobox.update(
-      'Your browser may have performance or functionality issues with OpenInfraMap.<br/>' +
-        '<a href="http://webglreport.com">WebGL</a> with hardware acceleration is required for this site ' +
-        'to perform well.',
-    );
-    mount(document.body, infobox);
-  }*/
+      '<p>Votre navigateur peut rencontrer des problèmes à l\'utilisation de Gespot.fr</p>' +
+        '<p><a href="http://webglreport.com">WebGL</a> avec une accélération matérielle est nécessaire pour utiliser cette application correctement.</p>' +
+        '<p>Si votre navigateur supporte effectivement WebGL, il faut désactiver les restrictions particulières pour ce site.</p>'
+    )
+    mount(document.body, infobox)
+  }
 
   const gsp_layers: LayerSpecificationWithZIndex[] = [
     ...style_gsp_power,
