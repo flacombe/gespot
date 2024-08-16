@@ -372,7 +372,7 @@ const substation_label: ExpressionSpecification = [
 
 const layers: LayerSpecificationWithZIndex[] = [
   {
-    zorder: 100,
+    zorder: 200,
     id: 'power_line_warning',
     type: 'line',
     source: 'gespot',
@@ -387,20 +387,6 @@ const layers: LayerSpecificationWithZIndex[] = [
     layout: {
       'line-join': 'round',
       'line-cap': 'round',
-    }
-  },
-  {
-    zorder: 401,
-    id: 'power_substation',
-    type: 'fill',
-    filter: substation_visible_p,
-    source: 'gespot',
-    'source-layer': 'power_substation',
-    minzoom: 13,
-    paint: {
-      'fill-opacity': lineOpacity_p,
-      'fill-color': voltage_color('voltage'),
-      'fill-outline-color': 'rgba(0, 0, 0, 1)',
     }
   },
   {
@@ -563,28 +549,21 @@ const layers: LayerSpecificationWithZIndex[] = [
     }
   },
   {
-    zorder:520,
-    id: 'power_pole_label',
-    type: 'symbol',
+    zorder: 101,
+    id: 'power_substation',
+    type: 'fill',
+    filter: substation_visible_p,
     source: 'gespot',
-    filter: [
-      'all',
-      utilityPower_p,
-      ['==', ['get', 'type'], 'pole']
-    ],
-    minzoom: 14.5,
-    'source-layer': 'power_tower',
-    paint: powerTextPaint,
-    layout: {
-      'text-field': '{ref}',
-      'text-font':font,
-      'text-size': ['interpolate', ['linear'], ['zoom'], 11, 0, 12, 0, 12.01, 10],
-      'text-offset': [0, 1],
-      'text-anchor': 'top',
+    'source-layer': 'power_substation',
+    minzoom: 13,
+    paint: {
+      'fill-opacity': lineOpacity_p,
+      'fill-color': voltage_color('voltage'),
+      'fill-outline-color': 'rgba(0, 0, 0, 1)',
     }
   },
   {
-    zorder: 402,
+    zorder: 102,
     id: 'power_substation_point',
     type: 'circle',
     filter: ['all', substation_visible_p, substation_point_visible_p],
