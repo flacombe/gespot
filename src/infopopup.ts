@@ -189,6 +189,7 @@ class InfoPopup {
     // Design icon
     let featureRef = feature.layer['id'].replace('_point', '').replace('_symbol', '');
     let feature_iconpath;
+    let mainwidth = "col-12";
     if (feature.properties['design_ref']){
       feature_iconpath = this.designIcon(featureRef+'_'+feature.properties['design_ref'])
     }else if (feature.properties['line_attachment'] && feature.properties['line_arrangement']){
@@ -196,9 +197,10 @@ class InfoPopup {
     }
     if (feature_iconpath != null) {
       mount(mainrow, el('div.col-5', el('img.designicon', { src: feature_iconpath })))
+      mainwidth = "col-7";
     }
 
-    const maincontent = el('div.col-7')
+    const maincontent = el(`div.${mainwidth}`)
     mount(mainrow, maincontent);
 
     mount(maincontent, this.nameTags(feature));
