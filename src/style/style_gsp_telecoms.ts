@@ -117,6 +117,26 @@ const layers: LayerSpecificationWithZIndex[] = [
     }
   },
   {
+    zorder:520,
+    id: 'telecoms_pole_label',
+    type: 'symbol',
+    source: 'gespot',
+    filter: [
+      'all',
+      utilityTelecom_p
+    ],
+    minzoom: 14.5,
+    'source-layer': 'utility_support',
+    paint: telecomTextPaint,
+    layout: {
+      'text-field': '{ref}',
+      'text-font':font,
+      'text-size': ['interpolate', ['linear'], ['zoom'], 11, 0, 12, 0, 12.01, 10],
+      'text-offset': [0, 1],
+      'text-anchor': 'top'
+    }
+  },
+  {
     zorder: 405,
     id: 'telecoms_mast',
     type: 'symbol',

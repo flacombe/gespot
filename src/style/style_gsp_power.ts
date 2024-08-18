@@ -549,6 +549,27 @@ const layers: LayerSpecificationWithZIndex[] = [
     }
   },
   {
+    zorder:520,
+    id: 'power_pole_label',
+    type: 'symbol',
+    source: 'gespot',
+    filter: [
+      'all',
+      utilityPower_p,
+      ['==', ['get', 'type'], 'pole']
+    ],
+    minzoom: 14.5,
+    'source-layer': 'power_tower',
+    paint: powerTextPaint,
+    layout: {
+      'text-field': '{ref}',
+      'text-font':font,
+      'text-size': ['interpolate', ['linear'], ['zoom'], 11, 0, 12, 0, 12.01, 10],
+      'text-offset': [0, 1],
+      'text-anchor': 'top',
+    }
+  },
+  {
     zorder: 101,
     id: 'power_substation',
     type: 'fill',

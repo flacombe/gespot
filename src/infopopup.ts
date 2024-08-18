@@ -187,7 +187,7 @@ class InfoPopup {
     mount(content, mainrow)
 
     // Design icon
-    let featureRef = feature.layer['id'].replace('_point', '').replace('_symbol', '');
+    let featureRef = feature.layer['id'].replace('_point', '').replace('_symbol', '').replace('_label', '');
     let feature_iconpath;
     let mainwidth = "col-12";
     if (feature.properties['design_ref']){
