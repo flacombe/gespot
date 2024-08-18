@@ -4,6 +4,7 @@ const friendlyNames: { [key: string]: string } = {
     power_pole: 'Poteau électrique',
     power_pole_symbol: 'Poteau électrique',
     power_pole_point: 'Poteau électrique',
+    power_pole_label: 'Poteau électrique',
     power_substation: 'Poste électrique',
     power_substation_point: 'Poste électrique',
     power_line_1: 'Ligne électrique',
@@ -17,6 +18,7 @@ const friendlyNames: { [key: string]: string } = {
     telecoms_mast: 'Pylône télécom',
     telecoms_pole_symbol: 'Poteau télécom',
     telecoms_pole_point: 'Poteau télécom',
+    telecoms_pole_label: 'Poteau télécom',
     vegetation_forest: 'Végétation'
   }
   
