@@ -19,7 +19,15 @@ const friendlyNames: { [key: string]: string } = {
     telecoms_pole_symbol: 'Poteau télécom',
     telecoms_pole_point: 'Poteau télécom',
     telecoms_pole_label: 'Poteau télécom',
-    vegetation_forest: 'Végétation'
+    vegetation_forest: 'Végétation',
+    design_ref: 'Famille',
+    line_attachment: 'Armement',
+    line_management: 'Topologie',
+    line_arrangement: 'Arrangement',
+    operator: 'Exploitant',
+    height: 'Hauteur',
+    material: 'Matériau',
+    transition: 'Emergence'
   }
   
   export default friendlyNames

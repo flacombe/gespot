@@ -183,24 +183,35 @@ class InfoPopup {
     setChildren(attrs_table, renderedProperties)
 
     const content = el('div.container.p-0')
-    const mainrow = el('div.row')
+    const mainrow = el('div.row', {style: "max-width:370px;"})
     mount(content, mainrow)
 
     // Design icon
     let featureRef = feature.layer['id'].replace('_point', '').replace('_symbol', '').replace('_label', '');
     let feature_iconpath;
-    let mainwidth = "col-12";
+    let maincontentwidth = "col-12";
     if (feature.properties['design_ref']){
       feature_iconpath = this.designIcon(featureRef+'_'+feature.properties['design_ref'])
     }else if (feature.properties['line_attachment'] && feature.properties['line_arrangement']){
       feature_iconpath = this.designIcon(featureRef+'_'+feature.properties['line_attachment']+'_'+feature.properties['line_arrangement'])
     }
     if (feature_iconpath != null) {
-      mount(mainrow, el('div.col-5', el('img.designicon', { src: feature_iconpath })))
-      mainwidth = "col-7";
+      mount(mainrow, el('div.col-6', el('img.designicon', { src: feature_iconpath })))
+      maincontentwidth = "col-6";
+    }else if(featureRef == "power_tower"){
+      maincontentwidth = "col-5";
+      let teaser = el('div.col-7');
+      mount(teaser, el('h6', 'Le matériau ou la silhouette de ce support sont encore inconnus'))
+      mount(teaser, el('span', 'Envie de contribuer ?'))
+      mount(teaser, el('br'))
+      mount(teaser, el('a', {target: "_blank", href:"https://www.openstreetmap.org/user/new", class:"font-weight-bold text-primary"}, 'Créez un compte'))
+      mount(teaser, el('span', ' et '))
+      mount(teaser, el('a', {target: "_blank", href:"https://wiki.openstreetmap.org/wiki/Power_networks/France/Aerien", class:"font-weight-bold text-primary"}, 'consultez la documentation'))
+      mount(teaser, el('span', ' pour ajouter les informations manquantes directement sur OpenStreetMap !'))
+      mount(mainrow, teaser);
     }
 
-    const maincontent = el(`div.${mainwidth}`)
+    const maincontent = el(`div.${maincontentwidth}`)
     mount(mainrow, maincontent);
 
     mount(maincontent, this.nameTags(feature));
