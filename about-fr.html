@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>A propos &mdash;Gespot </title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
   <!-- Matomo -->
   <script>
@@ -22,12 +21,12 @@
   <!-- End Matomo Code -->
 </head>
 <body>
-   <div class="container">
-	<header>
-      <h1><img src="img/frise.svg" alt="Logo" height="50"/>&nbsp;Gespot</h1>
-	</header>
+  <div class="container">
+    <header>
+        <h1><img src="img/frise.svg" alt="Logo" height="50"/>&nbsp;Gespot</h1>
+    </header>
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-8">
 
       <p class="lead"><a href="/">Cette application</a> est une mise en valeur des réseaux aériens électriques, de télécommunication
       et leurs supports connus de la base de données&nbsp;<a href="http://www.openstreetmap.org/">OpenStreetMap</a>.</p>
@@ -44,14 +43,14 @@
 
       <h3>Vous êtes impliqués dans le déploiement FTTH en France ?</h3>
       <p>Le déploiement de la fibre optique présente une opportunité pour fiabiliser la connaissance de nos réseaux aériens.
-        <br/>Les études de charges réalisées constituent une connaissance coûteuse qu'il ne faut pas oublier.
+        <br/>Les études de charges réalisées constituent une connaissance coûteuse qu'il ne faut pas oublier, y compris en vue de préparer la vie du réseau et l'évolution de sa résilience.
       </p>
-      <p>Personnes publiques ou privées concernées par une délégation de service public, vous êtes invités à publier, par exemple sur la plateforme <a href="https://data.gouv.fr">Data.gouv.fr</a>, les données d'inventaire patrimoniales au format GraceTHD.</p>
+      <p>Personnes publiques ou privées concernées par une délégation de service public, vous êtes invitées à publier, par exemple sur la plateforme <a href="https://data.gouv.fr">Data.gouv.fr</a>, les données d'inventaire patrimoniales au format GraceTHD.</p>
       <p>Exploitants de la zone d'investissement privé, vous êtes invités à vous joindre à l'effort en publiant des données équivalentes, en particulier à propos des supports électriques.</p>
 
       <h2>Pourquoi les réseaux aériens ?</h2>
       <p>Les réseaux aériens sont sensibles à divers aléas et représentent un lieu de mutualisation plus important qu'en souterrain encore.
-      <br/>La connaissance de l'existant permet d'en assurer la maintenance et favorise le développement de nouvelles infrastructures.</p>
+      <br/>La connaissance de l'existant permet d'en assurer la maintenance et favorise le développement de nouvelles infrastructures plus résilientes.</p>
 
       <h2>Et les réseaux souterrains ?</h2>
       <p>Il est possible de retrouver une cartographie identique pour les réseaux souterrains sur <a href="https://map.infos-reseaux.com">cette autre adresse</a></p>
@@ -80,24 +79,21 @@
          sur <a href="https://wiki.osmfoundation.org/wiki/Takedown_procedure">OpenStreetMap</a>.</p>         
 
       <h2>Comment accéder aux données ?</h2>
-        <p>Toutes les données affichées viennent d'OpenStreetMap.</p>
-        <p>Vous pouvez utiliser les tuiles vectorielles produites par nos serveurs, dans les limites du raisonnable et hors production.
-        <br/>Pour une utilisation soutenue ou industrielle, merci de mettre en place votre propre plateforme.
-        <br/>Référez-vous <a href="/map.json">au fichier</a> de définition des couches.</p>
+      <p>Toutes les données affichées viennent d'OpenStreetMap.</p>
+      <p>Vous pouvez utiliser les tuiles vectorielles produites par nos serveurs, dans les limites du raisonnable et hors production.
+      <br/>Pour une utilisation soutenue ou industrielle, merci de mettre en place votre propre plateforme.
+      <br/>Référez-vous <a href="/map.json">au fichier</a> de définition des couches.</p>
 
-        <p>Pour des extracts limités de données, rendez-vous sur <a href="https://overpass-turbo.eu/">Overpass Turbo</a> pour obtenir du GeoJson ou similaire.
-        
-        <p>Pour des volumes plus importants, vous serez obligé de traiter le jeu de données complet d'OSM ce qui est relativement complexe.</p>
+      <p>Pour des extracts limités de données, rendez-vous sur <a href="https://overpass-turbo.eu/">Overpass Turbo</a> pour obtenir du GeoJson ou similaire.
+      
+      <p>Pour des volumes plus importants, vous serez obligé de traiter le jeu de données complet d'OSM ce qui est relativement complexe.</p>
 
-        <p>Dans tous les cas, pour utiliser ces données, vous devrez vous conformer aux <a href="https://www.openstreetmap.org/copyright">termes de la licence OpenStreetMap</a>
-        <br/>Cela requiert d'apposer une attribution explicite directement sur l'affichage de la carte. Une attribution de ce site et "OpenInfraMap" comportant des liens sera apprécié même si ce n'est pas obligatoire.</p>
+      <p>Dans tous les cas, pour utiliser ces données, vous devrez vous conformer aux <a href="https://www.openstreetmap.org/copyright">termes de la licence OpenStreetMap</a>
+      <br/>Cela requiert d'apposer une attribution explicite directement sur l'affichage de la carte. Une attribution de ce site et "OpenInfraMap" comportant des liens sera apprécié même si ce n'est pas obligatoire.</p>
 
-      </div>
-      <div class="col-lg-4">
-        <a class="twitter-timeline" data-width="390" data-height="800" href="https://twitter.com/InfosReseaux?ref_src=twsrc%5Etfw">InfosReseaux.com</a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
       </div>
     </div>
   </div>
+  <script type="module" src="/src/bootstrap.ts"></script>
 </body>
 </html>

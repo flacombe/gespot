@@ -1,30 +1,27 @@
-import './index.css'
 import maplibregl from 'maplibre-gl'
 import { el, mount } from 'redom'
 
 import $ from "jquery";
+import './bootstrap.ts';
 
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-slider';
-import 'bootstrap-slider/dist/css/bootstrap-slider.min.css';
+import './index.css';
 
 import LayerSwitcher from '@russss/maplibregl-layer-switcher'
 import URLHash from '@russss/maplibregl-layer-switcher/urlhash'
-import { LayerSpecificationWithZIndex } from './style/types.js'
+import { LayerSpecificationWithZIndex } from './style/types.ts'
 
-import EditButton from './editbutton.js'
-import InfoPopup from './infopopup.js'
-import KeyControl from './key/key.js'
-import WarningBox from './warning-box/warning-box.js'
+import EditButton from './editbutton.ts'
+import InfoPopup from './infopopup.ts'
+import KeyControl from './key/key.ts'
+import WarningBox from './warning-box/warning-box.ts'
 
-import map_style from './style/style.js'
+import map_style from './style/style.ts'
 import style_base from './style/style_base.ts'
-import style_labels from './style/style_labels.js'
-import {powerLayers as style_gsp_power, warningAreas_filters, warningWidth} from './style/style_gsp_power.js';
-import {telecomLayers as style_gsp_telecoms} from './style/style_gsp_telecoms.js'
-import {vegetationLayers as style_gsp_vegetation} from './style/style_gsp_vegetation.js'
-import loadIcons from './loadIcons.js'
+import style_labels from './style/style_labels.ts'
+import {powerLayers as style_gsp_power, warningAreas_filters, warningWidth} from './style/style_gsp_power.ts';
+import {telecomLayers as style_gsp_telecoms} from './style/style_gsp_telecoms.ts'
+import {vegetationLayers as style_gsp_vegetation} from './style/style_gsp_vegetation.ts'
+import loadIcons from './loadIcons.ts'
 
 function isWebglSupported() {
   if (window.WebGLRenderingContext) {
@@ -83,6 +80,10 @@ function init() {
 
   layer_switcher.setInitialVisibility(map_style);
 
+  // Disclaimer
+  $('#disclaimerModal').modal('show');
+
+  // Map
   const map = new maplibregl.Map(
     url_hash.init({
       container: 'map',
