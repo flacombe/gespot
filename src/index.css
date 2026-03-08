@@ -46,10 +46,6 @@ h1 {
   font-size: 23px !important;
 }
 
-a {
-  color: #333;
-}
-
 .maplibregl-ctrl-attrib {
   font-size: 10px;
   line-height: 14px;
