@@ -1,0 +1,207 @@
+{
+  "edit": {
+    "edit": "Editer",
+    "remote": "Editer avec un tiers (JOSM, etc.)",
+    "browser": "Editer en ligne (iD)",
+    "error": "Impossible de charger l'éditeur distant - vérifiez qu'il est en cours d'exécution et que le contrôle à distance est activé.\nErreur : "
+  },
+  "names": {
+    "power": {
+      "transformer": "transformateur",
+      "tower": "pylône électrique",
+      "pole": "poteau électrique",
+      "terminal": "ancrage électrique",
+      "substation": "poste électrique",
+      "cable": "câble électrique",
+      "line": "ligne électrique",
+      "line-hazard": "danger électrique",
+      "hvdc": "HVDC",
+      "line-reference": "référence",
+      "tower-transition": "émergence sur pylône",
+      "pole-transition": "émergence sur poteau",
+      "pole-transformer": "poste sur poteau",
+      "pole-switch": "organe de coupure"
+    },
+    "telecom": {
+      "pole": "poteau télécom",
+      "line": "artère télécom",
+      "mast": "pylône/mat radio"
+    },
+    "natural": {
+      "vegetation":"végétation"
+    },
+    "cable": "câble",
+    "pole": "poteau",
+    "tower": "pylône",
+    "cabinet": "armoire",
+    "place": "lieu"
+  },
+  "info": {
+    "name": "nom",
+    "operator": "exploitant",
+    "owner": "propriétaire",
+    "utility": "destination",
+    "source": "source",
+    "start-date": "date début",
+    "substation": "poste électrique",
+    "transformer": "transformateur",
+    "ref": "référence",
+    "circuits": "circuits",
+    "type": "type",
+    "website": "site web",
+    "view-openstreetmap": "voir sur OpenStreetMap",
+    "usage": "usage",
+    "remotely-controllable": "télécommande",
+    "location": "emplacment",
+    "design": "famille",
+    "design-ref": "silhouette",
+    "material": "matériau",
+    "height": "hauteur",
+    "switch": "organe",
+    "line-attachment": "armement",
+    "line-management": "topologie",
+    "line-arrangement": "arrangement",
+    "capacity":"capacité"
+  },
+  "values":{
+    "type": {
+      "tower": "pylône",
+      "pole": "poteau",
+      "utility_pole": "poteau",
+      "terminal": "ancrage",
+      "minor_line": "ligne nue",
+      "line": "ligne nue",
+      "cable": "câble"
+    },
+    "location": {
+      "underground": "souterrain",
+      "underwater": "sous-marin",
+      "overhead": "aérien",
+      "roof": "toiture",
+      "surface": "surface",
+      "outdoor": "exterieur",
+      "indoor": "intérieur"
+    },
+    "structure": {
+      "lattice": "trellis"
+    },
+    "utility":{
+      "power":"électricité",
+      "telecom":"telecoms",
+      "street_lighting": "éclairage public"
+    },
+    "material": {
+      "wood": "bois",
+      "metal": "métal",
+      "steel": "acier",
+      "concrete": "béton",
+      "composite": "composite",
+      "epoxy": "époxy"
+    },
+    "substation": {
+      "transmission": "transport",
+      "distribution": "distribution",
+      "generation": "production",
+      "minor_distribution": "quartier",
+      "traction": "traction",
+      "converter": "conversion DC"
+    },
+    "transformer": {
+      "distribution": "distribution",
+      "main": "principal",
+      "generator": "évacuation"
+    },
+    "switch":{
+      "disconnector": "sectionneur",
+      "mechanical": "interrupteur",
+      "circuit_breaker": "disjoncteur"
+    },
+    "telecom-medium":{
+      "copper": "cuivre",
+      "fibre": "fibre",
+      "coaxial": "coaxial"
+    },
+    "line-attachment": {
+      "anchor": "ancrage",
+      "suspension": "suspension",
+      "pin": "rigide",
+      "pulley": "poulie"
+    },
+    "line-management": {
+      "straight": "continu",
+      "branch": "dérivation",
+      "split": "étoilement",
+      "transition": "émergence",
+      "transpose": "permutation",
+      "cross": "croisement",
+      "termination": "arrêt"
+    }
+  },
+  "lifecycle":{
+    "construction": "en construction",
+    "disused": "abandonné",
+    "removed": "supprime"
+  },
+  "nav": {
+    "about": "A propos",
+    "legal": "Mentions légales"
+  },
+  "units": {
+    "kV": "kV",
+    "Hz": "Hz",
+    "MW": "MW",
+    "DC": "DC",
+    "below_10kv": "< 10 kV",
+    "ge_kv": "≥ {{voltage}} kV",
+    "kW": "kW",
+    "V": "V"
+  },
+  "more_info": "Plus d'informations",
+  "wikipedia": "Wikipedia",
+  "wikimedia-commons": "Wikimedia Commons",
+  "wikidata": "Wikidata",
+  "key": {
+    "name": "Légende",
+    "infrastructure":{
+      "label": "Infrastructure"
+    },
+    "power":{
+      "label": "Electricité"
+    },
+    "telecom":{
+      "label": "Télécoms",
+      "path-medium": "{{medium}} path"
+    },
+    "natural":{
+      "label": "Environnement"
+    }
+  },
+  "other": "Other",
+  "warning": "Avertissement",
+  "warnings": {
+        "webgl": "<p>Votre navigateur peut rencontrer des problèmes de performance ou de fonctionnalité avec Open Infrastructure Map.</p><p><a href=\"http://webglreport.com\">WebGL</a> avec accélération matérielle est nécessaire pour que ce site fonctionne correctement.</p><p>Si votre navigateur prend en charge WebGL, vous devrez peut-être désactiver la protection contre le fingerprinting du navigateur pour ce site.</p>"
+    },
+  "layers": {
+    "background": "Arrière-plan",
+    "labels": "Labels",
+    "infrastructure": "Infrastructure",
+    "power": "Electricité",
+    "telecoms": "Télécoms",
+    "natural": "Environement",
+    "vegetation": "Végétation",
+    "title": "Couches"
+  },
+  "hazard":{
+    "electric":{
+      "prevent": "prévention du risque électrique",
+      "area": "zone de risque électrique"
+    }
+  },
+  "coordinates": "Coordonnées",
+  "search": {
+        "clear": "Vider la recherche",
+        "no-results": "Aucun résultat trouvé"
+    },
+    "unknown": "Indéfini",
+    "openstreetmap": "OpenStreetMap"
+}
