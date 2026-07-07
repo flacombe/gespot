@@ -1,12 +1,17 @@
 import { IControl } from 'maplibre-gl'
-import {el, mount, list, setStyle, RedomElement} from 'redom';
-import {materialColor_scale} from '../style/common.js';
-import {powerColor} from '../style/style_gsp_power.js';
-import {telecomColor, mediumColor_scale} from '../style/style_gsp_telecoms.js';
-import {svgLine, svgCircle} from './svg.js';
-import './key.css';
-// @ts-expect-error Vite virtual module
+import { t } from 'i18next'
+import { el, mount, list, setStyle, RedomElement } from 'redom'
+import { titleCase } from 'title-case'
+import { materialColor_scale } from '../style/common.ts'
+import { default as power_layers, voltage_scale, special_voltages } from '../style/style_gsp_power.ts'
+import { mediumColor_scale as telecoMedium_scale } from '../style/style_gsp_telecoms.js'
+import { default as natural_layers } from '../style/style_gsp_natural.js'
+
+import { svgLine, svgCircle, svgLineFromLayer, svgRectFromLayer } from './svg.js'
+import './key.css'
 import { manifest } from 'virtual:render-svg'
+
+const line_thickness = 6
 
 class Td {
   el: HTMLTableCellElement
@@ -35,21 +40,24 @@ class KeyControl implements IControl {
     this._map = map
 
     this._control = el('button', {
-      class: 'maplibregl-ctrl-icon oim-key-control'
+      class: 'maplibregl-ctrl-icon oim-key-control',
+      title: t('key.name'),
+      ariaLabel: t('key.name')
     })
 
-    this._container = el('div', { class: 'maplibregl-ctrl oim-key-panel' })
+    this._container = el('div', { class: 'oim-key-panel' })
 
     this.populate()
+    mount(document.body, this._container)
 
     this._control.onclick = () => {
-      this._container.style.display = 'block'
-      this._control.style.display = 'none'
+      const button_position = this._control.getBoundingClientRect()
+      this._container.style.top = button_position.top + 'px'
+      this._container.style.right = document.documentElement.clientWidth - button_position.right + 'px'
+      this._container.classList.add('visible')
     }
 
-    setTimeout(() => this.resize(), 100)
-    this._map.on('resize', () => this.resize())
-    return el('div', this._control, this._container, {
+    return el('div', this._control, {
       class: 'maplibregl-ctrl maplibregl-ctrl-group'
     })
   }
@@ -61,74 +69,35 @@ class KeyControl implements IControl {
     this._pane = undefined
   }
 
-  resize() {
-    if (!this._pane) {
-      return
-    }
-    // Set max-height of key depending on window style
-    const map_style = window.getComputedStyle(this._map!.getContainer())
-    let cont_style
-    if (this._control.style.display != 'none') {
-      cont_style = this._control.getBoundingClientRect()
-    } else {
-      cont_style = this._container.getBoundingClientRect()
-    }
-    const height = parseInt(map_style.height) - cont_style.top - 100 + 'px'
-    setStyle(this._pane, { 'max-height': height })
-  }
-
   header() {
-    const close_button = el('.oim-key-close', '×')
+    const close_button = el('button.oim-key-close', '×')
 
     close_button.onclick = () => {
-      this._container.style.display = 'none'
-      this._control.style.display = 'block'
+      this._container.classList.remove('visible')
     }
-    return el('.oim-key-header', el('h2', 'Légende'), close_button)
+    return el('.oim-key-header', el('h2', t('key.name', 'Key')), close_button)
   }
 
   async populate() {
-    mount(this._container, this.header());
+    mount(this._container, this.header())
 
-    let pane = el('.oim-key-pane');
-    pane.appendChild(el('h4', 'Supports'));
-    mount(pane, await this.supportsTable());
-    pane.appendChild(el('h4', 'Energie'));
-    mount(pane, this.powerTable());
-    pane.appendChild(el('h4', 'Télécoms'));
-    mount(pane, await this.telecomTable());
-    this._pane = pane;
+    const pane = el('.oim-key-body')
+    pane.appendChild(el('h3', t('key.infrastructure.label', 'Infrastructure')))
+    mount(pane, await this.supportsTable())
+    pane.appendChild(el('h3', t('key.power.label', 'Power')))
+    mount(pane, await this.powerTable())
+    mount(pane, await this.voltageTable())
+    pane.appendChild(el('h3', t('key.telecoms.label', 'Telecoms')))
+    mount(pane, await this.telecomTable())
+    pane.appendChild(el('h3', t('key.natural.label', 'Environnement')))
+    mount(pane, await this.naturalTable())
+    this._pane = pane
 
-    mount(this._container, pane);
-  }
-
-  async supportsTable() {
-    let rows = [];
-    for (let row of materialColor_scale) {
-      let label = row[0];
-      if (row[1] == null){
-        continue;
-      }
-      if (label === null) {
-        label = 'Commun';
-      } else {
-        label = `${label}`;
-      }
-
-      rows.push([label, row[1]]);
-    }
-
-    rows = rows.map(row => [row[0], svgCircle(row[1], 'grey', 1, 8, 0)]);
-    rows.push(['Pylône', await this.sprite('power_tower')]);
-    rows.push(['Transition aéro-sout', await this.sprite('power_pole_transition')]);
-
-    let table = list('table', Tr);
-    table.update(rows);
-    return table;
+    mount(this._container, pane)
   }
 
   async sprite(name: string, size = 25) {
-    const spriteDiv = el('img.oim-plant-sprite', {
+    const spriteDiv = el('img.oim-key-symbol', {
       src: manifest['svg'][name],
       height: size
     })
@@ -138,40 +107,102 @@ class KeyControl implements IControl {
     return spriteDiv as unknown as SVGElement
   }
 
-  powerTable() {
-    let rows = [
-      ['Appui élec', svgCircle("#dedede", powerColor, 1, 8, 3)],
+  // Infrastructure
+  async supportsTable() {
+    const rows = [
+      [titleCase(t('names.tower', 'Tower/Pylon'), {sentenceCase: true}), await this.sprite('power_tower', 15)],
+      [
+        titleCase(t('names.power.tower-transition', 'Transition tower'), {sentenceCase: true}),
+        await this.sprite('power_tower_transition', 15)
+      ],
+      [titleCase(t('names.pole'), {sentenceCase: true}), await this.sprite('pole', 15)],
+      [titleCase(t('names.power.pole-transition', 'Transition pole'), {sentenceCase: true}), await this.sprite('power_pole_transition', 10)]
     ];
     
-    let table = list('table', Tr);
-    table.update(rows);
-    return table;
-  }
-
-  async telecomTable() {
-    let rows = [];
-    for (let row of mediumColor_scale) {
-      let label = row[0];
-      if (row[1] == null){
-        continue;
-      }
-      if (label === null) {
-        label = 'Artère inconnue';
+    for (const row of materialColor_scale) {
+      let label = row[0]?.toString()
+      if (!label) {
+        label = t('undefined', 'Unknown')
       } else {
-        label = `Artère ${label}`;
+        label = titleCase(t('values.material.'+label, label), {sentenceCase: true})
       }
 
-      rows.push([label, row[1]]);
+      rows.push([label, svgCircle(row[1], 'grey', 1, 8, 0)])
     }
 
-    rows = rows.map(row => [row[0], svgLine(row[1], 2, '6 3')]);
-    rows.push(['Appui télécom', svgCircle("#dedede", telecomColor, 1, 8, 3)]);
-    rows.push(['Pylône radio', await this.sprite('comms_tower')]);
+    const table = list('table', Tr)
+    table.update(rows)
+    return table
+  }
 
-    let table = list('table', Tr);
-    table.update(rows);
-    return table;
+  // Power
+  async powerTable() {
+    const rows = [
+      [titleCase(t('names.power.pole', 'Power pole'), {sentenceCase: true}), await this.sprite('power_pole', 15)]
+    ];
+
+    const table = list('table', Tr)
+    table.update(rows)
+    return table
+  }
+
+  async voltageTable() {
+    let rows = []
+    for (const row of voltage_scale) {
+      let label = row[0]?.toString()
+      if (!label) {
+        label = t('units.below_10kv', '< 10 kV')
+      } else {
+        label = t('units.ge_kv', '≥ {{voltage}} kV', { voltage: label })
+      }
+
+      rows.push([label, row[1]])
+    }
+
+    rows.push([t('names.power.hvdc', 'HVDC'), special_voltages.hvdc])
+    rows.push([t('key.traction', 'Traction (< 50 Hz)'), special_voltages.traction])
+
+    rows = rows.map((row) => [row[0], svgLine(row[1], line_thickness)])
+
+    const table = list('table', Tr)
+    table.update(rows)
+    return table
+  }
+
+  // Telecoms
+  async telecomTable() {
+    const rows = [
+      [titleCase(t('names.telecom.pole', 'Telecom pole'), {sentenceCase: true}), await this.sprite('telecom_pole', 15)],
+      [titleCase(t('names.telecom.mast', 'Tower/mast'), {sentenceCase: true}), await this.sprite('comms_tower')]
+    ];
+
+    for (const row of telecoMedium_scale) {
+      let label = row[0]?.toString()
+
+      if (!label) {
+        label = t('undefined', 'Indéfini')
+      } else {
+        label = titleCase(t('values.telecom-medium.'+label, label), {sentenceCase: true})
+      }
+
+      rows.push([label, svgLine(row[1], 2, '6 3')])
+    }
+
+    const table = list('table', Tr)
+    table.update(rows)
+    return table
+  }
+
+  // Natural environement
+  async naturalTable() {
+    const rows = [
+      [titleCase(t('names.natural.vegetation', 'Vegetation'), {sentenceCase: true}), svgRectFromLayer(natural_layers(), 'vegetation_forest')]
+    ]
+    
+    const table = list('table', Tr)
+    table.update(rows)
+    return table
   }
 }
 
-export {KeyControl as default};
+export { KeyControl as default }

@@ -1,0 +1,14 @@
+.oim-popup-hazard .oim-popup-header {
+  background: var(--oim-popup-header-hazard-background);
+}
+
+.oim-popup-hazard h3 img {
+  max-height: 16px;
+  position: relative;
+  top: 1px;
+  margin-right: 0.3em;
+}
+
+.hazardMessage {
+  max-width:250px;
+}

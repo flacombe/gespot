@@ -1,19 +1,37 @@
 import { ExpressionSpecification } from 'maplibre-gl'
 import { LayerSpecificationWithZIndex } from './types.js'
-import {scale_color, text_paint, operator_text, underground_p, poleRadius_p, materialColor_scale, lineOpacity_p, font} from './common.js';
+import {scale_color, text_paint, operator_text, underground_p, indoor_p, poleRadius_p, materialColor_scale, lineOpacity_p, font} from './common.js';
+import {
+  all,
+  has,
+  get,
+  interpolate,
+  coalesce,
+  match,
+  case_,
+  any,
+  zoom,
+  concat,
+  step,
+  round,
+  literal,
+  if_,
+  not,
+  rgb
+} from './stylehelpers.ts'
 
 const utilityTelecom_p: ExpressionSpecification = [
   'all',
   ['==', ['get', 'utility'], 'telecom'],
 ];
 
-const telecomColor = '#297f00';
+export const telecomColor = '#297f00';
 const telecomTextPaint = Object.assign({
   "text-color":telecomColor
 }, text_paint);
 
 // Colors
-const mediumColor_scale = [
+export const mediumColor_scale = [
   ['fibre', '#61637A'],
   ['copper', '#ff8900'],
   ['coaxial', '#136fff'],
@@ -42,13 +60,14 @@ const lineThickness_p: ExpressionSpecification = [
   ],
 ];
 
-const layers: LayerSpecificationWithZIndex[] = [
+export default function layers(): LayerSpecificationWithZIndex[] {
+  return [
   {
     zorder: 105,
     id: 'telecoms_line',
     type: 'line',
     source: 'gespot',
-    filter: ['all', ['!', underground_p]],
+    filter: all(not(underground_p), not(indoor_p)),
     minzoom: 10,
     'source-layer': 'telecoms_communication_line',
     paint: {
@@ -59,18 +78,39 @@ const layers: LayerSpecificationWithZIndex[] = [
     }
   },
   {
+    zorder: 267,
+    id: 'telecoms_pole_transition',
+    type: 'symbol',
+    filter: all(utilityTelecom_p, ['==', ['get', 'type'], 'pole'], get('transition')),
+    source: 'gespot',
+    'source-layer': 'utility_support',
+    minzoom: 14.5,
+    layout: {
+      'icon-image': 'power_pole_transition',
+      'icon-offset': literal([-20, 0]),
+      'icon-size': interpolate(zoom, [
+        [14, 0.3],
+        [20, 1]
+      ]),
+      'icon-allow-overlap': true
+    }
+  },
+  {
     zorder: 310,
     id: 'telecoms_pole_symbol',
     type: 'symbol',
     source: 'gespot',
-    filter: [
-      'all',
-      utilityTelecom_p
-    ],
+    filter: utilityTelecom_p,
     minzoom: 11,
-    maxzoom:14.5,
+    maxzoom: 14.5,
     'source-layer': 'utility_support',
-    paint: telecomTextPaint,
+    paint: {
+      ...telecomTextPaint,
+      'icon-opacity': interpolate(zoom, [
+        [10.5, 0],
+        [11.5, 1]
+      ])
+    },
     layout: {
       'icon-image': [
         'case',
@@ -98,10 +138,7 @@ const layers: LayerSpecificationWithZIndex[] = [
     id: 'telecoms_pole_point',
     type: 'circle',
     source: 'gespot',
-    filter: [
-      'all',
-      utilityTelecom_p
-    ],
+    filter: utilityTelecom_p,
     minzoom: 14.5,
     'source-layer': 'utility_support',
     paint: {
@@ -121,10 +158,7 @@ const layers: LayerSpecificationWithZIndex[] = [
     id: 'telecoms_pole_label',
     type: 'symbol',
     source: 'gespot',
-    filter: [
-      'all',
-      utilityTelecom_p
-    ],
+    filter: utilityTelecom_p,
     minzoom: 14.5,
     'source-layer': 'utility_support',
     paint: telecomTextPaint,
@@ -164,7 +198,7 @@ const layers: LayerSpecificationWithZIndex[] = [
     id: 'telecoms_line_label',
     type: 'symbol',
     source: 'gespot',
-    filter: ['all', ['!', underground_p]],
+    filter: all(not(underground_p), not(indoor_p)),
     minzoom: 9,
     'source-layer': 'telecoms_communication_line',
     paint: text_paint,
@@ -177,7 +211,5 @@ const layers: LayerSpecificationWithZIndex[] = [
       'text-offset': [0, 1],
       'text-max-angle': 10
     }
-  }
-];
-
-export {layers as telecomLayers, telecomColor, mediumColor_scale};
+  }];
+}

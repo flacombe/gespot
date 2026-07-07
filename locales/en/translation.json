@@ -1,0 +1,207 @@
+{
+  "edit": {
+    "edit": "Edit",
+    "remote": "Edit with remote control (JOSM, etc)",
+    "browser": "Edit in browser (iD)",
+    "error": "Unable to load remote editor - make sure it's running and has remote control enabled.\nError: "
+  },
+  "names": {
+    "power": {
+      "transformer": "transformer",
+      "tower": "power tower",
+      "pole": "power pole",
+      "terminal": "power terminal",
+      "substation": "substation",
+      "cable": "power cable",
+      "line": "power line",
+      "line-hazard": "electric hazard zone",
+      "hvdc": "HVDC",
+      "line-reference": "line reference",
+      "tower-transition": "transition on tower",
+      "pole-transition": "transition on pole",
+      "pole-transformer": "transformer on pole",
+      "pole-switch": "switch on pole"
+    },
+    "telecom": {
+      "pole": "telecom pole",
+      "line": "telecom line",
+      "mast": "radio tower/mast"
+    },
+    "natural": {
+      "vegetation":"végétation"
+    },
+    "cable": "cable",
+    "pole": "pole",
+    "tower": "tower",
+    "cabinet": "cabinet",
+    "place": "place"
+  },
+  "info": {
+    "name": "name",
+    "operator": "operator",
+    "owner": "owner",
+    "utility": "sector",
+    "source": "source",
+    "start-date": "start date",
+    "substation": "substation",
+    "transformer": "transformer",
+    "ref": "reference",
+    "circuits": "circuits",
+    "type": "type",
+    "website": "website",
+    "view-openstreetmap": "view on OpenStreetMap",
+    "usage": "usage",
+    "remotely-controllable": "remote",
+    "location": "location",
+    "design": "design",
+    "design-ref": "shape",
+    "material": "material",
+    "height": "height",
+    "switch": "switch",
+    "line-attachment": "line attachment",
+    "line-management": "line management",
+    "line-arrangement": "line arrangement",
+    "capacity":"capacity"
+  },
+  "values":{
+    "type": {
+      "tower": "tower",
+      "pole": "pole",
+      "utility_pole": "pole",
+      "terminal": "terminal",
+      "minor_line": "minor line",
+      "line": "line",
+      "cable": "cable"
+    },
+    "location": {
+      "underground": "underground",
+      "underwater": "underwater",
+      "overhead": "overhead",
+      "roof": "roof",
+      "surface": "surface",
+      "outdoor": "outdoor",
+      "indoor": "indoor"
+    },
+    "structure": {
+      "lattice": "lattice"
+    },
+    "utility":{
+      "power":"power",
+      "telecom":"telecoms",
+      "street_lighting": "street lighting"
+    },
+    "material": {
+      "wood": "wood",
+      "metal": "steel",
+      "steel": "steel",
+      "concrete": "concrete",
+      "composite": "composite",
+      "epoxy": "epoxy"
+    },
+    "substation": {
+      "transmission": "transmission",
+      "distribution": "distribution",
+      "generation": "generation",
+      "minor_distribution": "minor distribution",
+      "traction": "traction",
+      "converter": "DC converter"
+    },
+    "transformer": {
+      "distribution": "distribution",
+      "main": "main",
+      "generator": "generation"
+    },
+    "switch":{
+      "disconnector": "disconnector",
+      "mechanical": "mechanical",
+      "circuit_breaker": "circuit breaker"
+    },
+    "telecom-medium":{
+      "copper": "copper",
+      "fibre": "fibre",
+      "coaxial": "coaxial"
+    },
+    "line-attachment": {
+      "anchor": "anchor",
+      "suspension": "suspension",
+      "pin": "pin",
+      "pulley": "pulley"
+    },
+    "line-management": {
+      "straight": "straight",
+      "branch": "branch",
+      "split": "split",
+      "transition": "transition",
+      "transpose": "transposing",
+      "cross": "cross",
+      "termination": "termination"
+    }
+  },
+  "lifecycle":{
+    "construction": "under construction",
+    "disused": "disused",
+    "removed": "removed"
+  },
+  "nav": {
+    "about": "About",
+    "legal": "Legal"
+  },
+  "units": {
+    "kV": "kV",
+    "Hz": "Hz",
+    "MW": "MW",
+    "DC": "DC",
+    "below_10kv": "< 10 kV",
+    "ge_kv": "≥ {{voltage}} kV",
+    "kW": "kW",
+    "V": "V"
+  },
+  "more_info": "More info",
+  "wikipedia": "Wikipedia",
+  "wikimedia-commons": "Wikimedia Commons",
+  "wikidata": "Wikidata",
+  "key": {
+    "name": "Key",
+    "infrastructure":{
+      "label": "Infrastructure"
+    },
+    "power":{
+      "label": "Power"
+    },
+    "telecom":{
+      "label": "Telecoms",
+      "path-medium": "{{medium}} path"
+    },
+    "natural":{
+      "label": "Environnement"
+    }
+  },
+  "other": "Other",
+  "warning": "Warning",
+  "warnings": {
+    "webgl": "<p>Your browser may have performance or functionality issues with Open Infrastructure Map.</p><p><a href=\"http://webglreport.com\">WebGL</a> with hardware acceleration is required for this site to perform well.</p><p>If your browser supports WebGL, you may need to disable browser fingerprinting protection for this site.</p>"
+  },
+  "layers": {
+    "background": "Background",
+    "labels": "Labels",
+    "infrastructure": "Infrastructure",
+    "power": "Power",
+    "telecoms": "Telecoms",
+    "natural": "Environment",
+    "vegetation": "Vegetation",
+    "title": "Layers"
+  },
+  "hazard":{
+    "electric":{
+      "prevent": "electric hazard prevention",
+      "area": "electric hazard zone"
+    }
+  },
+  "coordinates": "Coordinates",
+  "search": {
+    "clear": "Clear search",
+    "no-results": "No results found"
+  },
+  "unknown": "Unknown",
+  "openstreetmap": "OpenStreetMap"
+}

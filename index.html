@@ -32,69 +32,107 @@
       <header>
         <div class="float-left text-left">
           <div class="float-left mr-2 mb-1"><img src="img/frise.svg" alt="Logo" height="35"/></div>
-          <h1>Gespot</h1>
+          <h1 class="title">Gespot</h1>
           <div class="d-inline-block ml-2"><a class="text-secondary" href="/about-fr.html">A&nbsp;propos</a>&nbsp;&ndash;&nbsp;<a class="text-secondary" href="/legal.html">Mentions&nbsp;légales</a></div>
           <div style="clear:left;">Gérer les poteaux en commun. Les explications <a href="http://peertube.openstreetmap.fr/w/pTsdU23amy9FX88mgyxBwR" target="_blank">en vidéo</a>.</div>
         </div>
       </header>
-      <div id="map"></div>
-    </div>
-    <div class="modal fade" id="disclaimerModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="false">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="disclaimerLabel"><img src="img/frise.svg" alt="Logo" height="23"/>&nbsp;Bienvenue sur Gespot</h5>
+      <div class="modal fade" id="electricityModal" data-backdrop="static" data-keyboard="false" aria-labelledby="electricityLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header p-2">
+              <h5 class="modal-title" id="electricityLabel"><img src="img/iso_7010_w012.svg" alt="Logo" height="35"/>&nbsp;Prévention du risque électrique</h5>
+            </div>
+            <div class="modal-body">
+              <p>
+                Cette carte affiche différentes informations à propos des réseaux aériens, notamment électriques. Ces réseaux mettent en oeuvre des conducteurs électriques pour acheminer l'énergie et il est systématiquement dangereux de s'en approcher, même sans les toucher.
+                <br/>Cela est encore plus vrai lorsque ces conducteurs sont nus. Reportez-vous <a href="https://tension-attention.fr/" target="_blank">aux outils mis à disposition par les gestionnaires de réseaux</a> pour en savoir plus.
+              </p>
+              <p>
+                En France, des distances d'approche sont prescrites par <a href="https://habilitations-electrique.fr/norme-nf-c18-510-legifrance/" target="_blank">la norme NF C-18-510</a> pour qualifier les conditions acceptables dans lesquelles il est possible de stationner, notamment lors de situations de travail, à proximité des ouvrages électriques.
+                <ul>
+                  <li><span class="font-weight-bold text-info">DLI - Distance Limite d'Investigation</span>. Elle est de 50 mètres autour d'un conducteur quelle que soit sa tension et vise à matérialiser la zone pour laquelle une étude des risques électriques est nécessaire.</li>
+                  <li><span class="font-weight-bold text-warning">DLVS - Voisinage simple</span>. Elle s'étale de 5 à 3 mètres selon le niveau de tension. Une habilitation est nécessaire pour s'approcher au-delà.</li>
+                  <li><span class="font-weight-bold text-warning">DLVR - Voisinage renforcé</span>. Elle s'étale de 4 mètres à 30 centimètres. Des protections adaptées sont nécessaires pour s'approcher au-delà.</li>
+                  <li><span class="font-weight-bold text-danger">DMA - Distance minimale d'approche</span>. Elle s'étale de 2.5 mètres à 30 centimètres. Des méthodes de travail spécifiques sont nécessaires au-delà.</li>
+                </ul>
+                Ces distances définissent l'apparition de zones au sein desquelles différentes habilitations sont nécessaires, que Gespot ne documente pas.
+              </p>
+              <p>
+                Gespot tente d'extrapoler l'emprise de ces zones d'après les géométries génératrices connues des ouvrages et des attributs associés. Cet exercice souffre de divers biais :
+                <ul>
+                  <li>Un conducteur bien présent sur le terrain peut être inconnu ou mal positionné dans OpenStreetMap</li>
+                  <li>Ses attributs peuvent être erronnés, notamment sa tension électrique d'exploitation ou la configuration de ses conducteurs</li>
+                  <li>L'extrapolation de la zone peut être elle-même erronnée en raison d'éléments extérieurs inconnus du logiciel</li>
+                </ul>
+                Il est donc essentiel de savoir critiquer ce que l'outil affiche pour ne pas s'exposer à des risques plus importants qu'évalué.
+                <br/>Gespot est un démonstrateur, maintenu de bonne volonté mais sans prétendre à l'exactitude.
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">J'ai compris</button>
+            </div>
           </div>
-          <div class="modal-body">
-            <p>
-              Cette carte a été conçue, maintenue et tenue à jour bénévolement depuis septembre 2020. Elle démontre les capacités d'OpenStreetMap a inventorier les supports des réseaux aériens pour plus d'une centaine d'exploitants.
-              <br/>En France, les poteaux électriques appartiennent aux communes, exploités par des gestionnaires de réseaux.
-              <br/>Il s'agit donc d'un patrimoine public dont <a href="https://files.infos-reseaux.com/openstreetmap/poteaux_aode.pdf" target="_blank">il faut prendre soin</a>.
-            </p>
-            <p>
-              Les données produites par la communauté OpenStreetMap sont librement réutilisables selon la <a href="https://fposm.fr/wp-content/uploads/2024/09/Guide-pratique-licence-ODbL.pdf" target="_blank">licence ODbL 1.0</a>.
-              <br/>Ce projet est vivant et porté par des bénévoles. Il ne pourrait exister sans l'implication de partenaires tels qu'<a href="https://www.enedis.fr/presse/open-data-enedis-participe-un-projet-collaboratif-mondial-dechange-de-donnees" target="_blank">Enedis</a> et les <a href="https://www.openstreetmap.fr/openstreetmap-france-services-web-infrastructure-technique-partenaires/" target="_blank">soutiens de l'association OpenStreetMap France</a>.
-              <br/>Découvrez-le <a href="http://peertube.openstreetmap.fr/w/pTsdU23amy9FX88mgyxBwR" target="_blank">en vidéo</a>, téléchargez les données brutes sur <a href="https://geodatamine.fr/" target="_blank">GéoDataMine</a> ou <a href="https://enedis.openstreetmap.fr/" target="_blank">suivez sa progression</a>.
-            </p>
+        </div>
+      </div>
+      <div class="modal fade" id="disclaimerModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="disclaimerLabel" aria-hidden="false">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="disclaimerLabel"><img src="img/frise.svg" alt="Logo" height="23"/>&nbsp;Bienvenue sur Gespot</h5>
+            </div>
+            <div class="modal-body">
+              <p>
+                Cette carte a été conçue, maintenue et tenue à jour bénévolement depuis septembre 2020. Elle démontre les capacités d'OpenStreetMap a inventorier les supports des réseaux aériens pour plus d'une centaine d'exploitants.
+                <br/>En France, les poteaux électriques appartiennent aux communes, exploités par des gestionnaires de réseaux.
+                <br/>Il s'agit donc d'un patrimoine public dont <a href="https://files.infos-reseaux.com/openstreetmap/poteaux_aode.pdf" target="_blank">il faut prendre soin</a>.
+              </p>
+              <p>
+                Les données produites par la communauté OpenStreetMap sont librement réutilisables selon la <a href="https://fposm.fr/wp-content/uploads/2024/09/Guide-pratique-licence-ODbL.pdf" target="_blank">licence ODbL 1.0</a>.
+                <br/>Ce projet est vivant et porté par des bénévoles. Il ne pourrait exister sans l'implication de partenaires tels qu'<a href="https://www.enedis.fr/presse/open-data-enedis-participe-un-projet-collaboratif-mondial-dechange-de-donnees" target="_blank">Enedis</a> et les <a href="https://www.openstreetmap.fr/openstreetmap-france-services-web-infrastructure-technique-partenaires/" target="_blank">soutiens de l'association OpenStreetMap France</a>.
+                <br/>Découvrez-le <a href="http://peertube.openstreetmap.fr/w/pTsdU23amy9FX88mgyxBwR" target="_blank">en vidéo</a>, téléchargez les données brutes sur <a href="https://geodatamine.fr/" target="_blank">GéoDataMine</a> ou <a href="https://enedis.openstreetmap.fr/" target="_blank">suivez sa progression</a>.
+              </p>
 
-            <div class="row">
-              <div class="col-md-4">
-                <div class="card">
-                  <img src="img/openstreetmap.svg" height="45" class="card-img-top" alt="Logo OpenStreetMap">
-                  <div class="card-body">
-                    <h5 class="card-title">Contribuez aux données</h5>
-                    <p class="card-text">Ajoutez les poteaux autour de vous dans la base de données.</p>
-                    <a href="https://www.openstreetmap.org/user/new" target="_blank" class="btn btn-primary">Créez un compte</a>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="card">
+                    <img src="img/openstreetmap.svg" height="45" class="card-img-top" alt="Logo OpenStreetMap">
+                    <div class="card-body">
+                      <h5 class="card-title">Contribuez aux données</h5>
+                      <p class="card-text">Ajoutez les poteaux autour de vous dans la base de données.</p>
+                      <a href="https://www.openstreetmap.org/user/new" target="_blank" class="btn btn-primary">Créez un compte</a>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card">
-                  <img src="img/opendata.svg" height="45" class="card-img-top" alt="Logo open data">
-                  <div class="card-body">
-                    <h5 class="card-title">Ouvrez vos données</h5>
-                    <p class="card-text">D'autres données publiques sont particulièrement utiles.</p>
-                    <a href="/about-fr.html" target="_blank" class="btn btn-primary">Découvrez lesquelles</a>
+                <div class="col-md-4">
+                  <div class="card">
+                    <img src="img/opendata.svg" height="45" class="card-img-top" alt="Logo open data">
+                    <div class="card-body">
+                      <h5 class="card-title">Ouvrez vos données</h5>
+                      <p class="card-text">D'autres données publiques sont particulièrement utiles.</p>
+                      <a href="/about-fr.html" target="_blank" class="btn btn-primary">Découvrez lesquelles</a>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card">
-                  <img src="img/github.svg" height="45" class="card-img-top" alt="Logo GitHub">
-                  <div class="card-body">
-                    <h5 class="card-title">Améliorez l'application</h5>
-                    <p class="card-text">Maintenir et ajouter de nouvelles fonctionnalités.</p>
-                    <a href="https://github.com/flacombe/gespot" target="_blank" class="btn btn-primary">Voir sur GitHub</a>
+                <div class="col-md-4">
+                  <div class="card">
+                    <img src="img/github.svg" height="45" class="card-img-top" alt="Logo GitHub">
+                    <div class="card-body">
+                      <h5 class="card-title">Améliorez l'application</h5>
+                      <p class="card-text">Maintenir et ajouter de nouvelles fonctionnalités.</p>
+                      <a href="https://github.com/flacombe/gespot" target="_blank" class="btn btn-primary">Voir sur GitHub</a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">J'ai compris</button>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">J'ai compris</button>
+            </div>
           </div>
         </div>
       </div>
+      <div id="map"></div>
     </div>
     <script type="module" src="/src/index.ts"></script>
   </body>
