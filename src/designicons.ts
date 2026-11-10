@@ -8,7 +8,7 @@ const designIcons: { [key: string]: string } = {
   power_tower_B1: manifest['svg']['power_tower_B1'],
   power_tower_B1B3: manifest['svg']['power_tower_B1B3'],
   power_tower_B1C3: manifest['svg']['power_tower_B1C3'],
-  power_tower_C4: manifest['svg']['power_tower_C4'],
+  power_tower_C4B: manifest['svg']['power_tower_C4B'],
   power_tower_E95H7: manifest['svg']['power_tower_E95H7'],
   power_tower_E95M7: manifest['svg']['power_tower_E95M7'],
   power_tower_F44: manifest['svg']['power_tower_F44'],
